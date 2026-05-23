@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GROUNDLEVEL v2 — Free AI Legal Agent for Freelancers</title>
+<meta name="description" content="Free AI legal agent for freelancers. One HTML file. Works offline. Identifies your rights, drafts documents, tells you where to file. UK + US.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#FAFBFC;--surface:#fff;--surface-2:#F3F4F6;--surface-3:#E5E7EB;
+  --ink:#1F2937;--ink-2:#4B5563;--muted:#9CA3AF;
+  --primary:#3B82F6;--primary-dark:#2563EB;--primary-light:#DBEAFE;
+  --green:#10B981;--green-light:#D1FAE5;--green-dark:#059669;
+  --amber:#F59E0B;--amber-light:#FEF3C7;
+  --red:#EF4444;
+  --purple:#8B5CF6;--purple-light:#EDE9FE;
+  --radius:12px;--max-w:860px;
+  --font:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.7}
+
+/* ── Hero ── */
+.hero{
+  text-align:center;padding:80px 24px 60px;
+  background:linear-gradient(180deg,#EFF6FF 0%,var(--bg) 100%);
+}
+.hero h1{font-size:clamp(2rem,5vw,3rem);font-weight:900;line-height:1.15;letter-spacing:-0.03em;max-width:700px;margin:0 auto}
+.hero h1 span{color:var(--primary)}
+.hero .sub{font-size:clamp(1rem,2.5vw,1.25rem);color:var(--ink-2);margin:16px auto 0;max-width:560px}
+.hero-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:28px 0}
+.chip{
+  font-size:13px;padding:6px 14px;border-radius:20px;background:var(--surface);
+  border:1px solid var(--surface-3);color:var(--ink-2);white-space:nowrap;
+}
+
+/* ── Download CTA ── */
+.download-section{
+  text-align:center;padding:0 24px 60px;
+}
+.dl-card{
+  display:inline-block;background:var(--surface);border-radius:16px;padding:32px 40px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.08);border:2px solid var(--green);max-width:500px;width:100%;
+}
+.dl-card h2{font-size:22px;font-weight:700;margin-bottom:8px}
+.dl-card p{color:var(--ink-2);font-size:14px;margin-bottom:20px}
+.dl-btn{
+  display:inline-flex;align-items:center;gap:10px;padding:14px 32px;
+  background:var(--green);color:#fff;font-size:16px;font-weight:700;
+  border:none;border-radius:var(--radius);cursor:pointer;text-decoration:none;
+  transition:all 0.15s;font-family:var(--font);
+}
+.dl-btn:hover{background:var(--green-dark);transform:translateY(-1px);box-shadow:0 4px 12px rgba(16,185,129,0.3)}
+.dl-meta{font-size:12px;color:var(--muted);margin-top:12px}
+
+/* ── Container ── */
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+
+/* ── Sections ── */
+section{padding:60px 0}
+section:nth-child(even){background:var(--surface)}
+section h2{font-size:clamp(1.5rem,3vw,2rem);font-weight:800;letter-spacing:-0.02em;margin-bottom:8px}
+section .section-sub{color:var(--ink-2);margin-bottom:32px;font-size:15px}
+
+/* ── Steps ── */
+.steps{counter-reset:step}
+.step{
+  display:flex;gap:20px;margin-bottom:28px;align-items:flex-start;
+  counter-increment:step;
+}
+.step-num{
+  flex-shrink:0;width:40px;height:40px;border-radius:50%;
+  background:var(--primary);color:#fff;font-weight:800;font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+}
+.step-content h3{font-size:16px;font-weight:700;margin-bottom:4px}
+.step-content p{font-size:14px;color:var(--ink-2)}
+
+/* ── How it Works grid ── */
+.how-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.how-card{
+  background:var(--surface);border:1px solid var(--surface-3);border-radius:var(--radius);
+  padding:20px;
+}
+.how-card .icon{font-size:28px;margin-bottom:8px}
+.how-card h3{font-size:15px;font-weight:700;margin-bottom:4px}
+.how-card p{font-size:13px;color:var(--ink-2)}
+
+/* ── Agent Grid ── */
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.agent-card{
+  padding:14px;border-radius:var(--radius);background:var(--surface-2);text-align:center;
+}
+.agent-card .sym{
+  width:36px;height:36px;border-radius:8px;display:inline-flex;align-items:center;
+  justify-content:center;color:#fff;font-weight:800;font-size:14px;margin-bottom:6px;
+}
+.agent-card .name{font-size:13px;font-weight:600}
+.agent-card .role{font-size:11px;color:var(--muted)}
+
+/* ── Provider table ── */
+.provider-table{width:100%;border-collapse:collapse;font-size:14px}
+.provider-table th{text-align:left;padding:8px 12px;border-bottom:2px solid var(--surface-3);font-weight:700;font-size:12px;text-transform:uppercase;color:var(--muted);letter-spacing:0.05em}
+.provider-table td{padding:10px 12px;border-bottom:1px solid var(--surface-2)}
+.provider-table tr:last-child td{border-bottom:none}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
+.badge-green{background:var(--green-light);color:var(--green-dark)}
+.badge-blue{background:var(--primary-light);color:var(--primary-dark)}
+.badge-purple{background:var(--purple-light);color:var(--purple)}
+
+/* ── Docs grid ── */
+.doc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.doc-card{
+  padding:16px;border-radius:var(--radius);border:1px solid var(--surface-3);background:var(--surface);
+}
+.doc-card .flag{font-size:12px;font-weight:600;margin-bottom:6px}
+.doc-card .flag.uk{color:var(--primary)}
+.doc-card .flag.us{color:var(--green-dark)}
+.doc-card h4{font-size:14px;font-weight:700;margin-bottom:2px}
+.doc-card p{font-size:12px;color:var(--muted)}
+
+/* ── Footer ── */
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px}
+footer a{color:var(--primary);text-decoration:none}
+
+/* ── Responsive ── */
+@media(max-width:600px){
+  .hero{padding:48px 16px 40px}
+  .dl-card{padding:24px 20px}
+  .step{flex-direction:column;gap:10px}
+  .how-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <h1>Been stiffed by a platform?<br><span>Get your money back.</span></h1>
+  <p class="sub">Free AI legal agent for freelancers. One HTML file. Works offline. Identifies your rights, drafts every document, tells you exactly where to file.</p>
+  <div class="hero-chips">
+    <span class="chip">&#128274; Sovereign — data stays on your device</span>
+    <span class="chip">&#9889; Works offline</span>
+    <span class="chip">&#127758; UK + US dual jurisdiction</span>
+    <span class="chip">&#129302; Plug in any LLM</span>
+    <span class="chip">&#128220; MIT open source</span>
+  </div>
+</div>
+
+<!-- ═══ DOWNLOAD ═══ -->
+<div class="download-section">
+  <div class="dl-card">
+    <h2>Download and use immediately</h2>
+    <p>One HTML file. Save it anywhere. Open in Chrome. No install, no account, no server.</p>
+    <a class="dl-btn" href="https://raw.githubusercontent.com/sjgant80-hub/groundlevel/main/GroundLevel-v2.html" download="GroundLevel-v2.html">
+      &#11015;&#65039; Download GroundLevel-v2.html
+    </a>
+    <div class="dl-meta">~88 KB &middot; HTML &middot; MIT License &middot; Chrome 113+ recommended</div>
+  </div>
+</div>
+
+<!-- ═══ HOW IT WORKS ═══ -->
+<section>
+  <div class="container">
+    <h2>How it works</h2>
+    <p class="section-sub">You describe what happened in plain English. Nine AI agents analyse your situation and generate everything you need to get paid.</p>
+
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="icon">&#128270;</div>
+        <h3>1. Parse your situation</h3>
+        <p>The Case Analyst agent extracts platform, amount, currency, jurisdiction, issue type, and state from your free-text description. No forms to fill.</p>
+      </div>
+      <div class="how-card">
+        <div class="icon">&#9878;&#65039;</div>
+        <h3>2. Research the law</h3>
+        <p>The Legal Researcher searches a built-in database of UK and US statutes, procedures, and platform-specific rules. Finds every law that protects you.</p>
+      </div>
+      <div class="how-card">
+        <div class="icon">&#128201;</div>
+        <h3>3. Score your case</h3>
+        <p>Case strength is scored 0-95 based on amount, evidence, jurisdiction options, applicable law, and known platform patterns.</p>
+      </div>
+      <div class="how-card">
+        <div class="icon">&#128221;</div>
+        <h3>4. Draft documents</h3>
+        <p>The Document Drafter generates ready-to-send legal documents — Letter Before Action, Demand Letter, GDPR SAR, BBB/FTC complaints — pre-filled with your details.</p>
+      </div>
+      <div class="how-card">
+        <div class="icon">&#128197;</div>
+        <h3>5. Build your timeline</h3>
+        <p>The Timeline Manager creates a day-by-day escalation plan with exact deadlines. Day 0: send LBA. Day 14: deadline expires. Day 21: file MCOL.</p>
+      </div>
+      <div class="how-card">
+        <div class="icon">&#127919;</div>
+        <h3>6. Track and escalate</h3>
+        <p>Mark steps complete, add notes, skip actions. If they don't pay, GroundLevel tells you exactly where to escalate next.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ THE 9 AGENTS ═══ -->
+<section>
+  <div class="container">
+    <h2>9-agent swarm</h2>
+    <p class="section-sub">Each agent has a specific role. They run sequentially, building on each other's output.</p>
+    <div class="agent-grid">
+      <div class="agent-card"><div class="sym" style="background:#6B7280">&Omega;</div><div class="name">Orchestrator</div><div class="role">Routes &amp; coordinates</div></div>
+      <div class="agent-card"><div class="sym" style="background:#3B82F6">&alpha;</div><div class="name">Case Analyst</div><div class="role">Parses facts</div></div>
+      <div class="agent-card"><div class="sym" style="background:#8B5CF6">&beta;</div><div class="name">Document Drafter</div><div class="role">Generates documents</div></div>
+      <div class="agent-card"><div class="sym" style="background:#F59E0B">&gamma;</div><div class="name">Timeline Manager</div><div class="role">Builds deadlines</div></div>
+      <div class="agent-card"><div class="sym" style="background:#10B981">&delta;</div><div class="name">Legal Researcher</div><div class="role">Searches statutes</div></div>
+      <div class="agent-card"><div class="sym" style="background:#EC4899">&epsilon;</div><div class="name">Rights Explainer</div><div class="role">Plain English rights</div></div>
+      <div class="agent-card"><div class="sym" style="background:#14B8A6">&zeta;</div><div class="name">Evidence Collector</div><div class="role">Checklist builder</div></div>
+      <div class="agent-card"><div class="sym" style="background:#6366F1">&eta;</div><div class="name">Template Engine</div><div class="role">Optimises output</div></div>
+      <div class="agent-card"><div class="sym" style="background:#EF4444">&theta;</div><div class="name">Escalation Engine</div><div class="role">Maps channels</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STEP BY STEP ═══ -->
+<section>
+  <div class="container">
+    <h2>Step-by-step guide</h2>
+    <p class="section-sub">From download to sending your first legal letter in under 5 minutes.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Download the file</h3>
+          <p>Click the download button above, or grab <code>GroundLevel-v2.html</code> from <a href="https://github.com/sjgant80-hub/groundlevel">GitHub</a>. Save it anywhere on your computer — Desktop, Documents, a USB stick. It's just one file.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Open in Chrome</h3>
+          <p>Double-click the file to open it in your browser. No server needed. No internet needed. It works completely offline out of the box.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Pick your jurisdiction</h3>
+          <p>Select <strong>UK</strong>, <strong>US</strong>, or <strong>Both</strong> on the landing page. This determines which laws and procedures are used in your analysis.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>Describe what happened</h3>
+          <p>Click "Describe what happened" and type your situation in plain English. Include: the platform name, how much they owe you, what happened, and where you're based. Example: <em>"DataAnnotation owes me $2,400 for completed AI training work. They approved my tasks 6 weeks ago but haven't paid. I'm in London."</em></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h3>Click "Analyse My Case"</h3>
+          <p>Watch the 9 agents fire one by one. In seconds you'll see your case strength score, applicable laws, your rights in plain English, and recommended actions.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <h3>Build your action plan</h3>
+          <p>Click "Build My Action Plan" to go to your dashboard. You'll find ready-to-send legal documents (Letter Before Action, GDPR SAR, Demand Letter, BBB/FTC complaints), an evidence checklist, and a step-by-step escalation timeline.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">7</div>
+        <div class="step-content">
+          <h3>Copy, download, and send</h3>
+          <p>Click any document to view it. Hit "Copy to Clipboard" or "Download .txt" to save it. The documents include today's date, the platform name, the amount owed, and the correct legal citations. Send them.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">8</div>
+        <div class="step-content">
+          <h3>Track your progress</h3>
+          <p>Use the tracking screen to mark steps complete, skip actions, and add notes. Your entire case history is stored in your browser's IndexedDB — private, persistent, and exportable as JSON.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ POWER UP ═══ -->
+<section>
+  <div class="container">
+    <h2>Optional: power up with any LLM</h2>
+    <p class="section-sub">GroundLevel works fully offline. But if you want AI-enhanced analysis, plug in any LLM provider. Your API key is stored locally and never sent to us.</p>
+
+    <table class="provider-table">
+      <thead>
+        <tr><th>Provider</th><th>Type</th><th>Cost</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>OpenAI</td><td><span class="badge badge-blue">OpenAI-compat</span></td><td>Pay per use</td></tr>
+        <tr><td>Groq</td><td><span class="badge badge-blue">OpenAI-compat</span></td><td>Free tier available</td></tr>
+        <tr><td>DeepSeek</td><td><span class="badge badge-blue">OpenAI-compat</span></td><td>Very cheap</td></tr>
+        <tr><td>Together AI</td><td><span class="badge badge-blue">OpenAI-compat</span></td><td>Free tier available</td></tr>
+        <tr><td>Mistral</td><td><span class="badge badge-blue">OpenAI-compat</span></td><td>Pay per use</td></tr>
+        <tr><td>OpenRouter</td><td><span class="badge badge-blue">OpenAI-compat</span></td><td>Free models available</td></tr>
+        <tr><td>Ollama</td><td><span class="badge badge-green">Local</span></td><td>Free (your hardware)</td></tr>
+        <tr><td>LM Studio</td><td><span class="badge badge-green">Local</span></td><td>Free (your hardware)</td></tr>
+        <tr><td>Google Gemini</td><td><span class="badge badge-purple">Native API</span></td><td>Free tier available</td></tr>
+        <tr><td>Anthropic Claude</td><td><span class="badge badge-purple">Native API</span></td><td>Pay per use</td></tr>
+        <tr><td>Custom endpoint</td><td><span class="badge badge-blue">OpenAI-compat</span></td><td>Your server</td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:24px">
+      <div class="steps">
+        <div class="step">
+          <div class="step-num" style="background:var(--green)">1</div>
+          <div class="step-content">
+            <h3>Open Settings</h3>
+            <p>Click the gear icon in the top-right corner of GroundLevel.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--green)">2</div>
+          <div class="step-content">
+            <h3>Pick a provider</h3>
+            <p>Select your LLM from the dropdown. The base URL and model name auto-fill.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--green)">3</div>
+          <div class="step-content">
+            <h3>Paste your API key</h3>
+            <p>Enter your API key. It's stored in your browser only — never sent anywhere except the provider you chose.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--green)">4</div>
+          <div class="step-content">
+            <h3>Test and save</h3>
+            <p>Click "Test Connection" to verify. If you see a green checkmark, save. Your next analysis will be AI-enhanced.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DOCUMENTS ═══ -->
+<section>
+  <div class="container">
+    <h2>Documents it generates</h2>
+    <p class="section-sub">Pre-filled with your details, today's date, correct legal citations, and the right tone.</p>
+    <div class="doc-grid">
+      <div class="doc-card"><div class="flag uk">UK</div><h4>Letter Before Action</h4><p>Pre-Action Protocol compliant. Required before MCOL.</p></div>
+      <div class="doc-card"><div class="flag uk">UK</div><h4>GDPR Subject Access Request</h4><p>Article 15 UK GDPR + DPA 2018 s.45. Forces data disclosure.</p></div>
+      <div class="doc-card"><div class="flag us">US</div><h4>Demand Letter</h4><p>Formal payment demand with legal basis and deadline.</p></div>
+      <div class="doc-card"><div class="flag us">US</div><h4>BBB Complaint</h4><p>Ready to paste into bbb.org/file-a-complaint.</p></div>
+      <div class="doc-card"><div class="flag us">US</div><h4>FTC Complaint</h4><p>Ready to paste into reportfraud.ftc.gov.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <p>GROUNDLEVEL v2 &middot; MIT License &middot; <a href="https://github.com/sjgant80-hub/groundlevel">GitHub</a></p>
+  <p style="margin-top:8px">This is a legal information tool, not legal advice. Consult a solicitor or attorney for advice specific to your situation.</p>
+  <p style="margin-top:8px;color:var(--surface-3)">v18 protocol &middot; sovereign &middot; built by AI Native Solutions</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GROUNDLEVEL v2 · AI Legal Agent for Freelancers</title>
+<!-- face(template(tag)) · v18 protocol · sovereign · dual jurisdiction UK+US -->
+<style>
+/* ═══════════════════════════════════════════════════
+   L6 SKIN — warm, trustworthy, mobile-first
+   NOT dark hacker. NOT corporate sterile.
+   For stressed freelancers who need comfort + power.
+   ═══════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:#FAFBFC;--surface:#FFFFFF;--surface-2:#F3F4F6;--surface-3:#E5E7EB;
+  --ink:#1F2937;--ink-2:#4B5563;--muted:#9CA3AF;
+  --primary:#3B82F6;--primary-dark:#2563EB;--primary-light:#DBEAFE;
+  --green:#10B981;--green-light:#D1FAE5;--green-dark:#059669;
+  --amber:#F59E0B;--amber-light:#FEF3C7;
+  --red:#EF4444;--red-light:#FEE2E2;
+  --purple:#8B5CF6;--purple-light:#EDE9FE;
+  --radius:10px;--radius-lg:16px;
+  --shadow:0 1px 3px rgba(0,0,0,0.08),0 1px 2px rgba(0,0,0,0.06);
+  --shadow-lg:0 4px 12px rgba(0,0,0,0.1);
+  --shadow-xl:0 8px 24px rgba(0,0,0,0.12);
+  --font:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --mono:'DM Mono',ui-monospace,monospace;
+  --max-w:800px;
+}
+
+[data-theme="dark"]{
+  --bg:#111827;--surface:#1F2937;--surface-2:#374151;--surface-3:#4B5563;
+  --ink:#F9FAFB;--ink-2:#D1D5DB;--muted:#6B7280;
+  --primary-light:#1E3A5F;--green-light:#064E3B;--amber-light:#78350F;
+  --red-light:#7F1D1D;--purple-light:#4C1D95;
+  --shadow:0 1px 3px rgba(0,0,0,0.3);--shadow-lg:0 4px 12px rgba(0,0,0,0.4);
+}
+
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--font);
+  font-size:16px;line-height:1.6;min-height:100vh;
+  display:flex;flex-direction:column;
+}
+
+/* ── Typography ── */
+h1{font-size:clamp(1.8rem,5vw,2.4rem);font-weight:800;line-height:1.2;letter-spacing:-0.02em}
+h2{font-size:clamp(1.3rem,3vw,1.6rem);font-weight:700;line-height:1.3;letter-spacing:-0.01em}
+h3{font-size:1.05rem;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;color:var(--ink-2)}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ── Header ── */
+header{
+  background:var(--surface);border-bottom:1px solid var(--surface-3);
+  padding:12px 20px;display:flex;justify-content:space-between;align-items:center;
+  position:sticky;top:0;z-index:100;
+}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-icon{width:32px;height:32px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;color:white;font-weight:800}
+.brand-text{font-weight:800;font-size:17px;letter-spacing:-0.01em}
+.brand-text span{color:var(--green)}
+.brand-badge{font-size:10px;padding:2px 7px;border-radius:20px;background:var(--green-light);color:var(--green-dark);font-weight:600;letter-spacing:0.04em}
+.header-controls{display:flex;gap:8px;align-items:center}
+.icon-btn{
+  width:36px;height:36px;border-radius:8px;border:1px solid var(--surface-3);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:16px;
+  transition:all 0.15s;
+}
+.icon-btn:hover{background:var(--surface-2);border-color:var(--primary)}
+
+/* ── Main ── */
+main{flex:1;padding:0 20px 100px;max-width:var(--max-w);margin:0 auto;width:100%}
+
+/* ── Cards ── */
+.card{
+  background:var(--surface);border:1px solid var(--surface-3);border-radius:var(--radius-lg);
+  padding:20px 24px;margin-bottom:16px;box-shadow:var(--shadow);
+}
+.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.card-title{font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-2)}
+
+/* ── Buttons ── */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 24px;border-radius:var(--radius);border:none;cursor:pointer;
+  font-family:var(--font);font-size:15px;font-weight:600;
+  transition:all 0.18s;letter-spacing:0.01em;
+}
+.btn-primary{background:var(--green);color:white}
+.btn-primary:hover{background:var(--green-dark);transform:translateY(-1px);box-shadow:var(--shadow-lg)}
+.btn-secondary{background:var(--surface-2);color:var(--ink);border:1px solid var(--surface-3)}
+.btn-secondary:hover{background:var(--surface-3)}
+.btn-outline{background:transparent;color:var(--primary);border:1.5px solid var(--primary)}
+.btn-outline:hover{background:var(--primary-light)}
+.btn-danger{background:var(--red);color:white}
+.btn-lg{padding:16px 32px;font-size:17px;border-radius:12px}
+.btn-sm{padding:8px 16px;font-size:13px}
+.btn-full{width:100%}
+.btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+
+/* ── Inputs ── */
+textarea,input[type="text"],input[type="number"],input[type="email"],select{
+  width:100%;padding:12px 16px;border:1.5px solid var(--surface-3);border-radius:var(--radius);
+  font-family:var(--font);font-size:15px;color:var(--ink);background:var(--surface);
+  transition:border 0.15s;resize:vertical;
+}
+textarea:focus,input:focus,select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(59,130,246,0.15)}
+textarea{min-height:140px;line-height:1.6}
+label{display:block;font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em}
+
+/* ── Badges ── */
+.badge{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:0.02em;
+}
+.badge-green{background:var(--green-light);color:var(--green-dark)}
+.badge-amber{background:var(--amber-light);color:#92400E}
+.badge-red{background:var(--red-light);color:#991B1B}
+.badge-blue{background:var(--primary-light);color:var(--primary-dark)}
+.badge-purple{background:var(--purple-light);color:#6D28D9}
+
+/* ── Progress Ring ── */
+.strength-ring{
+  width:120px;height:120px;margin:0 auto;position:relative;
+}
+.strength-ring svg{transform:rotate(-90deg)}
+.strength-ring circle{fill:none;stroke-width:10}
+.strength-ring .track{stroke:var(--surface-3)}
+.strength-ring .fill{stroke:var(--green);stroke-linecap:round;transition:stroke-dashoffset 1s ease}
+.strength-value{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-size:28px;font-weight:800;color:var(--ink);
+}
+
+/* ── Timeline ── */
+.timeline{padding-left:24px;border-left:2px solid var(--surface-3)}
+.timeline-item{position:relative;padding:0 0 20px 20px}
+.timeline-item:last-child{padding-bottom:0}
+.timeline-dot{
+  position:absolute;left:-29px;top:4px;width:12px;height:12px;border-radius:50%;
+  background:var(--surface-3);border:2px solid var(--bg);
+}
+.timeline-dot.done{background:var(--green)}
+.timeline-dot.active{background:var(--primary);box-shadow:0 0 0 4px rgba(59,130,246,0.2)}
+.timeline-dot.pending{background:var(--muted)}
+.timeline-dot.overdue{background:var(--red)}
+.timeline-date{font-size:12px;color:var(--muted);font-weight:500;margin-bottom:2px}
+.timeline-title{font-weight:600;color:var(--ink)}
+.timeline-desc{font-size:14px;color:var(--ink-2)}
+
+/* ── Agent Activity ── */
+.agent-list{display:grid;gap:8px}
+.agent-row{
+  display:flex;align-items:center;gap:12px;padding:10px 14px;
+  border-radius:var(--radius);background:var(--surface-2);transition:all 0.3s;
+}
+.agent-row.active{background:var(--primary-light);border:1px solid var(--primary)}
+.agent-row.done{opacity:0.6}
+.agent-symbol{
+  width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:700;color:white;flex-shrink:0;
+}
+.agent-name{font-weight:600;font-size:14px}
+.agent-status{font-size:12px;color:var(--muted)}
+.agent-spinner{width:16px;height:16px;border:2px solid var(--primary-light);border-top-color:var(--primary);border-radius:50%;animation:spin 0.8s linear infinite;margin-left:auto;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── Checklist ── */
+.check-item{
+  display:flex;align-items:flex-start;gap:10px;padding:10px 0;
+  border-bottom:1px solid var(--surface-2);
+}
+.check-item:last-child{border-bottom:none}
+.check-box{
+  width:20px;height:20px;border:2px solid var(--surface-3);border-radius:5px;
+  cursor:pointer;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;
+  transition:all 0.15s;
+}
+.check-box.checked{background:var(--green);border-color:var(--green);color:white;font-size:12px}
+.check-text{font-size:14px;color:var(--ink)}
+.check-text.done{text-decoration:line-through;color:var(--muted)}
+
+/* ── Document Card ── */
+.doc-card{
+  border:1px solid var(--surface-3);border-radius:var(--radius);padding:14px 18px;
+  margin-bottom:10px;background:var(--surface);cursor:pointer;transition:all 0.15s;
+}
+.doc-card:hover{border-color:var(--primary);box-shadow:var(--shadow)}
+.doc-card-header{display:flex;justify-content:space-between;align-items:center}
+.doc-card-title{font-weight:600;font-size:15px}
+.doc-card-type{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}
+.doc-card-actions{display:flex;gap:6px;margin-top:10px}
+
+/* ── Screens ── */
+.screen{display:none;animation:fadeIn 0.3s ease}
+.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ── Landing ── */
+.hero{text-align:center;padding:48px 0 32px}
+.hero-sub{font-size:18px;color:var(--ink-2);margin-top:12px;max-width:520px;margin-left:auto;margin-right:auto}
+.hero-features{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:28px 0 20px;max-width:520px;margin-left:auto;margin-right:auto}
+.feature-chip{
+  font-size:13px;color:var(--ink-2);background:var(--surface);border:1px solid var(--surface-3);
+  padding:6px 14px;border-radius:20px;white-space:nowrap;
+}
+.feature-chip.active{border-color:var(--green);color:var(--green-dark);background:var(--green-light)}
+.case-count{
+  font-size:14px;color:var(--muted);margin:8px 0 4px;
+}
+.case-count span:first-child{font-weight:700;color:var(--primary);font-size:16px}
+.jurisdiction-toggle{
+  display:flex;gap:0;border:1.5px solid var(--surface-3);border-radius:var(--radius);
+  overflow:hidden;margin:24px auto;width:fit-content;
+}
+.jur-btn{
+  padding:10px 24px;font-family:var(--font);font-size:14px;font-weight:600;
+  border:none;cursor:pointer;background:var(--surface);color:var(--ink-2);transition:all 0.15s;
+}
+.jur-btn.active{background:var(--primary);color:white}
+
+/* ── Bottom Nav ── */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;background:var(--surface);
+  border-top:1px solid var(--surface-3);display:none;padding:8px 16px 12px;
+  z-index:100;
+}
+.bottom-nav.visible{display:flex;justify-content:space-around}
+.nav-item{
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  font-size:10px;color:var(--muted);cursor:pointer;padding:4px 8px;
+  border-radius:6px;transition:all 0.15s;font-weight:500;
+}
+.nav-item.active{color:var(--primary)}
+.nav-item:hover{color:var(--primary);background:var(--primary-light)}
+.nav-icon{font-size:20px}
+
+/* ── Disclaimer ── */
+.disclaimer{
+  background:var(--amber-light);color:#92400E;font-size:12px;
+  padding:8px 20px;text-align:center;border-top:1px solid #FCD34D;
+}
+
+/* ── Modal ── */
+.modal-overlay{
+  position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);
+  z-index:200;display:none;align-items:center;justify-content:center;padding:20px;
+}
+.modal-overlay.open{display:flex}
+.modal{
+  background:var(--surface);border-radius:var(--radius-lg);padding:28px;
+  max-width:560px;width:100%;max-height:80vh;overflow-y:auto;box-shadow:var(--shadow-xl);
+}
+.modal h2{margin-bottom:16px}
+.modal-close{position:absolute;top:16px;right:16px;cursor:pointer;font-size:20px;color:var(--muted)}
+
+/* ── Tabs ── */
+.tabs{display:flex;gap:0;border-bottom:2px solid var(--surface-3);margin-bottom:20px}
+.tab{
+  padding:10px 18px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;
+  border-bottom:2px solid transparent;margin-bottom:-2px;transition:all 0.15s;
+}
+.tab.active{color:var(--primary);border-bottom-color:var(--primary)}
+.tab-content{display:none}.tab-content.active{display:block}
+
+/* ── Responsive ── */
+@media(max-width:640px){
+  main{padding:0 12px 100px}
+  .card{padding:16px}
+  .hero{padding:32px 0 24px}
+  .hero-features{gap:6px}
+  .btn-lg{padding:14px 24px;font-size:15px}
+}
+
+/* ── Utility ── */
+.flex{display:flex}.flex-col{flex-direction:column}.gap-2{gap:8px}.gap-3{gap:12px}.gap-4{gap:16px}
+.items-center{align-items:center}.justify-between{justify-content:space-between}
+.text-center{text-align:center}.mt-2{margin-top:8px}.mt-3{margin-top:12px}.mt-4{margin-top:16px}.mb-3{margin-bottom:12px}
+.text-sm{font-size:14px}.text-xs{font-size:12px}.text-muted{color:var(--muted)}.font-mono{font-family:var(--mono)}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════
+     L1 FACE — 6 screens, 3 faces
+     Landing → Describe → Analysis → Dashboard → Tracking → Resolution
+     ═══════════════════════════════════════════════════ -->
+
+<header>
+  <div class="brand">
+    <div class="brand-icon">GL</div>
+    <div>
+      <div class="brand-text">GROUND<span>LEVEL</span></div>
+    </div>
+    <span class="brand-badge">FREE</span>
+  </div>
+  <div class="header-controls">
+    <button class="icon-btn" id="btnSettings" title="Settings">&#9881;</button>
+    <button class="icon-btn" id="btnTheme" title="Toggle dark mode">&#9790;</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ── SCREEN: LANDING ── -->
+  <div class="screen active" id="screen-landing">
+    <div class="hero">
+      <h1>Been stiffed by a platform?<br>Get your money back.</h1>
+      <p class="hero-sub">Free AI legal agent. Identifies your rights, drafts every document, tells you exactly where to file. Works offline. Your data never leaves your device.</p>
+      <div class="hero-features">
+        <span class="feature-chip">&#128274; Sovereign — your data stays on-device</span>
+        <span class="feature-chip">&#9889; Works offline — no internet required</span>
+        <span class="feature-chip">&#127758; UK + US dual jurisdiction</span>
+        <span class="feature-chip" id="llmChip">&#129302; Plug in any LLM to power up</span>
+      </div>
+      <div class="case-count" id="caseCountBar" style="display:none">
+        <span id="statCases">0</span> case<span id="statPlural">s</span> on file
+      </div>
+      <div class="jurisdiction-toggle">
+        <button class="jur-btn active" data-jur="UK">UK</button>
+        <button class="jur-btn" data-jur="US">US</button>
+        <button class="jur-btn" data-jur="DUAL">Both</button>
+      </div>
+      <button class="btn btn-primary btn-lg" onclick="showScreen('describe')">Describe what happened</button>
+      <p class="text-xs text-muted mt-3">Stop asking platforms nicely. Start citing the law.</p>
+    </div>
+  </div>
+
+  <!-- ── SCREEN: DESCRIBE ── -->
+  <div class="screen" id="screen-describe">
+    <div style="padding-top:24px">
+      <h2>Tell us what happened</h2>
+      <p class="text-sm text-muted mb-3">In your own words. We'll parse the details automatically.</p>
+      <textarea id="caseInput" placeholder="Example: DataAnnotation owes me $1,850 for completed work and won't release payment because I changed my PayPal email. I've emailed support twice with no human response. I'm based in London."></textarea>
+
+      <div class="card mt-4" id="parsedDetails" style="display:none">
+        <div class="card-header"><span class="card-title">Parsed Details</span><span class="badge badge-blue">Confirm</span></div>
+        <div class="flex flex-col gap-2" id="parsedFields"></div>
+      </div>
+
+      <div class="flex gap-2 mt-4">
+        <button class="btn btn-secondary" onclick="showScreen('landing')">Back</button>
+        <button class="btn btn-primary btn-full" id="btnAnalyse" onclick="analyseCase()">Analyse My Case</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN: ANALYSIS ── -->
+  <div class="screen" id="screen-analysis">
+    <div style="padding-top:24px">
+      <h2>Analysing your case...</h2>
+      <p class="text-sm text-muted mb-3" id="analysisStatus">Routing through agents...</p>
+
+      <div class="card">
+        <div class="card-title mb-3">Agent Activity</div>
+        <div class="agent-list" id="agentList"></div>
+      </div>
+
+      <div id="analysisResults" style="display:none">
+        <div class="card">
+          <div class="card-header"><span class="card-title">Case Strength</span></div>
+          <div class="strength-ring">
+            <svg viewBox="0 0 120 120"><circle class="track" cx="60" cy="60" r="52"/><circle class="fill" id="strengthCircle" cx="60" cy="60" r="52" stroke-dasharray="327" stroke-dashoffset="327"/></svg>
+            <div class="strength-value" id="strengthValue">0</div>
+          </div>
+          <p class="text-center text-sm mt-2" id="strengthLabel"></p>
+        </div>
+
+        <div class="card">
+          <div class="card-title mb-3">Your Rights</div>
+          <div id="rightsContent"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title mb-3">Legal Position</div>
+          <div id="legalContent"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title mb-3">Recommended Actions</div>
+          <div id="actionsContent"></div>
+        </div>
+
+        <button class="btn btn-primary btn-full btn-lg mt-4" onclick="buildActionPlan()">Build My Action Plan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN: DASHBOARD ── -->
+  <div class="screen" id="screen-dashboard">
+    <div style="padding-top:24px">
+      <div class="card" style="border-left:4px solid var(--green)">
+        <div class="flex justify-between items-center">
+          <div>
+            <h2 id="dashPlatform">-</h2>
+            <p class="text-sm text-muted" id="dashSummary">-</p>
+          </div>
+          <div class="text-right">
+            <div style="font-size:24px;font-weight:800;color:var(--green)" id="dashAmount">-</div>
+            <span class="badge badge-blue" id="dashJurisdiction">-</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <div class="tab active" data-tab="documents">Documents</div>
+        <div class="tab" data-tab="evidence">Evidence</div>
+        <div class="tab" data-tab="timeline">Timeline</div>
+      </div>
+
+      <div class="tab-content active" id="tab-documents">
+        <div id="documentsList"></div>
+      </div>
+
+      <div class="tab-content" id="tab-evidence">
+        <div id="evidenceChecklist"></div>
+      </div>
+
+      <div class="tab-content" id="tab-timeline">
+        <div class="timeline" id="timelineList"></div>
+      </div>
+
+      <div class="flex gap-2 mt-4">
+        <button class="btn btn-secondary btn-full" onclick="exportCase()">Export Case ZIP</button>
+        <button class="btn btn-primary btn-full" onclick="showScreen('tracking')">Track Progress</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCREEN: TRACKING ── -->
+  <div class="screen" id="screen-tracking">
+    <div style="padding-top:24px">
+      <h2>Escalation Tracker</h2>
+      <p class="text-sm text-muted mb-3">Update your progress. The system adapts your strategy.</p>
+
+      <div class="card" id="nextActionCard" style="border-left:4px solid var(--primary)">
+        <div class="card-title">Next Action</div>
+        <h2 id="nextActionTitle" class="mt-2">-</h2>
+        <p class="text-sm text-muted mt-2" id="nextActionDesc">-</p>
+        <div class="flex gap-2 mt-3">
+          <button class="btn btn-primary btn-sm" onclick="markActionDone()">Done</button>
+          <button class="btn btn-outline btn-sm" onclick="skipAction()">Skip</button>
+        </div>
+      </div>
+
+      <div class="timeline mt-4" id="trackingTimeline"></div>
+
+      <div class="card mt-4">
+        <label>Add Note</label>
+        <textarea id="trackingNote" placeholder="Got a response? Paste it here..." style="min-height:80px"></textarea>
+        <button class="btn btn-secondary btn-sm mt-2" onclick="addTrackingNote()">Save Note</button>
+      </div>
+
+      <button class="btn btn-primary btn-full mt-4" onclick="showScreen('resolution')">Case Resolved</button>
+    </div>
+  </div>
+
+  <!-- ── SCREEN: RESOLUTION ── -->
+  <div class="screen" id="screen-resolution">
+    <div style="padding-top:24px;text-align:center">
+      <div style="font-size:48px;margin-bottom:16px">&#9989;</div>
+      <h2>Case Outcome</h2>
+      <p class="text-sm text-muted mb-3">Record the result to help future freelancers.</p>
+
+      <div class="card text-left">
+        <label>Outcome</label>
+        <select id="outcomeResult">
+          <option value="resolved">Resolved - Got Paid</option>
+          <option value="partial">Partially Resolved</option>
+          <option value="unresolved">Unresolved</option>
+          <option value="ongoing">Still Ongoing</option>
+        </select>
+
+        <label class="mt-3">Amount Recovered</label>
+        <input type="text" id="outcomeAmount" placeholder="e.g. 1850">
+
+        <label class="mt-3">What worked?</label>
+        <textarea id="outcomeNotes" placeholder="Which method resolved it? How long did it take?" style="min-height:80px"></textarea>
+
+        <div class="flex gap-2 mt-4">
+          <button class="btn btn-secondary btn-full" onclick="exportCase()">Export Case</button>
+          <button class="btn btn-primary btn-full" onclick="saveOutcome()">Save &amp; Close</button>
+        </div>
+      </div>
+
+      <button class="btn btn-outline mt-4" onclick="newCase()">Start New Case</button>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── Bottom Navigation ── -->
+<nav class="bottom-nav" id="bottomNav">
+  <div class="nav-item active" data-screen="dashboard"><div class="nav-icon">&#128196;</div>Case</div>
+  <div class="nav-item" data-screen="tracking"><div class="nav-icon">&#9200;</div>Track</div>
+  <div class="nav-item" data-screen="describe"><div class="nav-icon">&#10010;</div>New</div>
+</nav>
+
+<!-- ── Settings Modal ── -->
+<div class="modal-overlay" id="settingsModal">
+  <div class="modal" style="max-width:480px">
+    <h2>Settings</h2>
+
+    <div style="margin:16px 0 8px;padding:12px 16px;background:var(--surface-2);border-radius:var(--radius);border-left:3px solid var(--primary)">
+      <div style="font-weight:600;font-size:14px;margin-bottom:4px">&#9889; Power up with any LLM</div>
+      <div style="font-size:13px;color:var(--ink-2)">Works offline by default. Add an API key to get AI-enhanced analysis, smarter documents, and deeper legal reasoning.</div>
+    </div>
+
+    <label class="mt-3">LLM Provider</label>
+    <select id="settingProvider" onchange="onProviderChange()">
+      <option value="none">Offline only (no API)</option>
+      <optgroup label="── OpenAI-compatible ──">
+        <option value="openai">OpenAI (GPT-4o / o3)</option>
+        <option value="deepseek">DeepSeek</option>
+        <option value="groq">Groq (Llama / Mixtral)</option>
+        <option value="together">Together AI</option>
+        <option value="mistral">Mistral</option>
+        <option value="openrouter">OpenRouter (any model)</option>
+        <option value="ollama">Ollama (local)</option>
+        <option value="lmstudio">LM Studio (local)</option>
+      </optgroup>
+      <optgroup label="── Native APIs ──">
+        <option value="gemini">Google Gemini</option>
+        <option value="claude">Anthropic Claude</option>
+      </optgroup>
+      <optgroup label="── Custom ──">
+        <option value="custom">Custom endpoint</option>
+      </optgroup>
+    </select>
+
+    <div id="llmFields" style="display:none">
+      <label class="mt-3" id="lblBaseUrl">API Base URL</label>
+      <input type="text" id="llmBaseUrl" placeholder="https://api.openai.com/v1">
+      <label class="mt-3">API Key <span class="text-xs text-muted">(stored locally only)</span></label>
+      <input type="password" id="llmApiKey" placeholder="sk-...">
+      <label class="mt-3">Model</label>
+      <input type="text" id="llmModel" placeholder="gpt-4o">
+      <button class="btn btn-sm btn-secondary mt-3" onclick="testLLM()" id="btnTestLLM">Test Connection</button>
+      <div id="llmTestResult" class="text-sm mt-2" style="display:none"></div>
+    </div>
+
+    <hr style="border:none;border-top:1px solid var(--surface-3);margin:20px 0 12px">
+
+    <label>Default Jurisdiction</label>
+    <select id="settingJurisdiction">
+      <option value="UK">United Kingdom</option>
+      <option value="US">United States</option>
+      <option value="DUAL">Both (dual track)</option>
+    </select>
+    <div class="flex gap-2 mt-4">
+      <button class="btn btn-secondary" onclick="closeSettings()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveSettings()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Document Viewer Modal ── -->
+<div class="modal-overlay" id="docModal">
+  <div class="modal" style="max-width:700px">
+    <div class="flex justify-between items-center mb-3">
+      <h2 id="docModalTitle">Document</h2>
+      <button class="btn btn-sm btn-secondary" onclick="closeDocModal()">Close</button>
+    </div>
+    <pre id="docModalContent" style="white-space:pre-wrap;font-family:var(--font);font-size:14px;line-height:1.7;background:var(--surface-2);padding:20px;border-radius:var(--radius);max-height:60vh;overflow-y:auto"></pre>
+    <div class="flex gap-2 mt-3">
+      <button class="btn btn-primary btn-sm" onclick="copyDocument()">Copy to Clipboard</button>
+      <button class="btn btn-secondary btn-sm" onclick="downloadDocument()">Download .txt</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Legal Disclaimer ── -->
+<div class="disclaimer">
+  This is a legal <strong>information</strong> tool, not legal advice. Consult a solicitor or attorney for advice specific to your situation.
+</div>
+
+<script type="module">
+// ═══════════════════════════════════════════════════
+// ◊·κ=1 · GROUNDLEVEL v2 · v18 protocol
+// face(template(tag)) · sovereign · dual jurisdiction
+// the playing field leveller · power back to the people
+// ═══════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════
+// L5 PERSIST — IndexedDB sovereign storage
+// ═══════════════════════════════════════════════════
+const DB_NAME = 'groundlevel_v2';
+const DB_VERSION = 1;
+let db = null;
+
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onupgradeneeded = (e) => {
+      const d = e.target.result;
+      if (!d.objectStoreNames.contains('cases')) d.createObjectStore('cases', { keyPath: 'id' });
+      if (!d.objectStoreNames.contains('settings')) d.createObjectStore('settings', { keyPath: 'id' });
+    };
+    req.onsuccess = (e) => { db = e.target.result; resolve(db); };
+    req.onerror = (e) => reject(e);
+  });
+}
+
+function dbPut(store, data) {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(store, 'readwrite');
+    tx.objectStore(store).put(data);
+    tx.oncomplete = () => resolve();
+    tx.onerror = (e) => reject(e);
+  });
+}
+
+function dbGet(store, id) {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(store, 'readonly');
+    const req = tx.objectStore(store).get(id);
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = (e) => reject(e);
+  });
+}
+
+function dbGetAll(store) {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(store, 'readonly');
+    const req = tx.objectStore(store).getAll();
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = (e) => reject(e);
+  });
+}
+
+// ═══════════════════════════════════════════════════
+// LEGAL DATABASE — UK + US · built in · works offline
+// ═══════════════════════════════════════════════════
+const LEGAL_DB = {
+  uk: {
+    statutes: [
+      { id: 'CRA2015', title: 'Consumer Rights Act 2015', sections: [
+        { ref: 's.49', text: 'Every contract to supply a service is to be treated as including a term that the trader must perform the service with reasonable care and skill.' },
+        { ref: 's.50', text: 'Every contract to supply a service is to be treated as including as a term any information provided by the trader about the service, where the consumer takes it into account.' },
+        { ref: 's.54', text: 'The consumer has the right to require repeat performance if the service does not conform to the contract.' },
+        { ref: 's.56', text: 'The consumer has the right to a price reduction if repeat performance is impossible or cannot be done within a reasonable time.' }
+      ]},
+      { id: 'LPCDA1998', title: 'Late Payment of Commercial Debts (Interest) Act 1998', sections: [
+        { ref: 's.1', text: 'It is an implied term of every qualifying contract that any qualifying debt carries simple interest (statutory interest).' },
+        { ref: 's.4', text: 'Statutory interest rate is Bank of England base rate + 8% per annum.' },
+        { ref: 's.5A', text: 'Fixed compensation for late payment: up to £999.99 = £40; £1,000-£9,999.99 = £70; £10,000+ = £100.' }
+      ]},
+      { id: 'GDPR_DPA2018', title: 'UK GDPR / Data Protection Act 2018', sections: [
+        { ref: 'Art.15', text: 'Right of access (Subject Access Request): you can request all personal data a company holds about you. They must respond within 30 days.' },
+        { ref: 'Art.17', text: 'Right to erasure: you can request deletion of your personal data in certain circumstances.' },
+        { ref: 'Art.77', text: 'Right to lodge a complaint with the ICO if your data rights are violated.' }
+      ]},
+      { id: 'ERA1996', title: 'Employment Rights Act 1996', sections: [
+        { ref: 's.13', text: 'An employer shall not make a deduction from wages unless authorised by statute, contract, or with prior written consent.' },
+        { ref: 's.23', text: 'A worker may present a complaint to an employment tribunal for unauthorised deduction from wages.' },
+        { ref: 's.230(3)', text: 'Definition of "worker" — wider than "employee" and may include some freelancers/contractors.' }
+      ]},
+      { id: 'SGSA1982', title: 'Supply of Goods and Services Act 1982', sections: [
+        { ref: 's.13', text: 'In a contract for the supply of a service, there is an implied term that the supplier will carry out the service with reasonable care and skill.' },
+        { ref: 's.15', text: 'Where consideration is not determined, there is an implied term that the party will pay a reasonable charge.' }
+      ]}
+    ],
+    procedures: {
+      lba: { name: 'Letter Before Action', deadline: 14, desc: 'Send a formal letter giving 14 days to pay. Required before court action under CPR Pre-Action Protocol for Debt Claims.' },
+      mcol: { name: 'Money Claim Online', url: 'https://www.moneyclaim.gov.uk', limit: 100000, desc: 'File online for claims up to £100,000. Fee starts at £35 for claims up to £300.' },
+      acas: { name: 'ACAS Early Conciliation', url: 'https://www.acas.org.uk', desc: 'Free conciliation service. Required before employment tribunal claims.' },
+      tradingStandards: { name: 'Trading Standards', desc: 'Report unfair business practices to your local Trading Standards office via Citizens Advice.' },
+      ico: { name: 'ICO Complaint', url: 'https://ico.org.uk/make-a-complaint', desc: 'If platform ignores your Subject Access Request or violates data protection rights.' }
+    },
+    fees: { mcol: [{ upTo: 300, fee: 35 }, { upTo: 500, fee: 50 }, { upTo: 1000, fee: 70 }, { upTo: 1500, fee: 80 }, { upTo: 3000, fee: 115 }, { upTo: 5000, fee: 205 }, { upTo: 10000, fee: 455 }] }
+  },
+  us: {
+    federal: [
+      { id: 'FTC5', title: 'FTC Act Section 5', text: 'Prohibits unfair or deceptive acts or practices in or affecting commerce. File complaints at ftc.gov/complaint.' },
+      { id: 'FLSA', title: 'Fair Labor Standards Act', text: 'Federal minimum wage, overtime, and record-keeping. Misclassification of employees as contractors may trigger FLSA protections.' }
+    ],
+    states: [
+      ['AL','Alabama',10000,null,'AG: 334-242-7300'],['AK','Alaska',10000,null,'AG: 907-269-5100'],
+      ['AZ','Arizona',3500,null,'AG: 602-542-5025'],['AR','Arkansas',5000,null,'AG: 800-482-8982'],
+      ['CA','California',12500,'CA Labor Code','AG: 916-322-3360'],['CO','Colorado',7500,null,'AG: 720-508-6000'],
+      ['CT','Connecticut',5000,null,'AG: 860-808-5318'],['DE','Delaware',15000,null,'AG: 302-577-8600'],
+      ['FL','Florida',8000,null,'AG: 866-966-7226'],['GA','Georgia',15000,null,'AG: 404-651-8600'],
+      ['HI','Hawaii',5000,null,'AG: 808-586-1500'],['ID','Idaho',5000,null,'AG: 208-334-2400'],
+      ['IL','Illinois',10000,'IL Wage Payment Act','AG: 800-386-5438'],['IN','Indiana',8000,null,'AG: 317-232-6201'],
+      ['IA','Iowa',6500,null,'AG: 515-281-5164'],['KS','Kansas',4000,null,'AG: 785-296-3751'],
+      ['KY','Kentucky',2500,null,'AG: 502-696-5300'],['LA','Louisiana',5000,null,'AG: 225-326-6400'],
+      ['ME','Maine',6000,null,'AG: 207-626-8800'],['MD','Maryland',5000,null,'AG: 410-528-8662'],
+      ['MA','Massachusetts',7000,'MA Wage Act','AG: 617-727-2200'],['MI','Michigan',6500,null,'AG: 517-335-7622'],
+      ['MN','Minnesota',15000,null,'AG: 651-296-3353'],['MS','Mississippi',3500,null,'AG: 601-359-3680'],
+      ['MO','Missouri',5000,null,'AG: 573-751-3321'],['MT','Montana',7000,null,'AG: 406-444-2026'],
+      ['NE','Nebraska',3600,null,'AG: 402-471-2682'],['NV','Nevada',10000,null,'AG: 702-486-3132'],
+      ['NH','New Hampshire',10000,null,'AG: 603-271-3658'],['NJ','New Jersey',3000,'NJ Wage Theft Act','AG: 973-504-6200'],
+      ['NM','New Mexico',10000,null,'AG: 505-490-4060'],['NY','New York',10000,'NY Labor Law','AG: 800-771-7755'],
+      ['NC','North Carolina',10000,null,'AG: 919-716-6400'],['ND','North Dakota',15000,null,'AG: 701-328-2210'],
+      ['OH','Ohio',6000,null,'AG: 800-282-0515'],['OK','Oklahoma',10000,null,'AG: 405-521-3921'],
+      ['OR','Oregon',10000,null,'AG: 877-877-9392'],['PA','Pennsylvania',12000,null,'AG: 717-787-3391'],
+      ['RI','Rhode Island',5000,null,'AG: 401-274-4400'],['SC','South Carolina',7500,null,'AG: 803-734-3970'],
+      ['SD','South Dakota',12000,null,'AG: 605-773-3215'],['TN','Tennessee',25000,null,'AG: 615-741-1671'],
+      ['TX','Texas',20000,'TX Payday Law','AG: 800-252-8011'],['UT','Utah',11000,null,'AG: 801-366-0260'],
+      ['VT','Vermont',5000,null,'AG: 802-828-3171'],['VA','Virginia',5000,null,'AG: 804-786-2071'],
+      ['WA','Washington',10000,'WA Wage Rebate Act','AG: 800-551-4636'],['WV','West Virginia',10000,null,'AG: 304-558-8986'],
+      ['WI','Wisconsin',10000,null,'AG: 608-266-1221'],['WY','Wyoming',6000,null,'AG: 307-777-7841'],
+      ['DC','Washington DC',10000,null,'AG: 202-727-3400']
+    ],
+    procedures: {
+      ftc: { name: 'FTC Complaint', url: 'https://reportfraud.ftc.gov', desc: 'Report unfair business practices to the Federal Trade Commission.' },
+      bbb: { name: 'BBB Complaint', url: 'https://www.bbb.org/file-a-complaint', desc: 'File with Better Business Bureau. Companies often respond to BBB complaints to protect their rating.' },
+      cfpb: { name: 'CFPB Complaint', url: 'https://www.consumerfinance.gov/complaint', desc: 'If the dispute involves financial products or services.' }
+    }
+  },
+  platforms: {
+    dataannotation: { name: 'DataAnnotation', hq: 'US', common_issues: ['payment holds','PayPal email mismatch','account suspension without notice','delayed payment for completed tasks'], approach: 'LBA + BBB + FTC triple-track. They respond to BBB complaints faster than support tickets.' },
+    upwork: { name: 'Upwork', hq: 'US', common_issues: ['milestone disputes','account suspension','fee disputes','connects refunds'], approach: 'Use Upwork dispute resolution first, then BBB. Upwork has internal mediation.' },
+    fiverr: { name: 'Fiverr', hq: 'Israel/US', common_issues: ['order cancellations','chargebacks','late delivery penalties','level demotion'], approach: 'Fiverr Resolution Centre first, then BBB. Document everything in-platform.' },
+    freelancer: { name: 'Freelancer.com', hq: 'Australia', common_issues: ['milestone disputes','arbitration fees','account restrictions','currency conversion'], approach: 'Internal dispute resolution, then BBB + state AG.' },
+    toptal: { name: 'Toptal', hq: 'US', common_issues: ['payment delays','contract termination disputes','invoice disputes'], approach: 'Direct legal demand, then BBB. Toptal responds to formal legal correspondence.' }
+  }
+};
+
+// ═══════════════════════════════════════════════════
+// L4 BLOOM — intent routing across 7 rings
+// ═══════════════════════════════════════════════════
+const BLOOM_KEYWORDS = {
+  0: ['what is','how do','explain','tell me about','define','meaning'],
+  1: ['template','give me','show me','letter','form','document'],
+  2: ['law','statute','act','section','rights','protection','legal'],
+  3: ['scared','angry','frustrated','worried','unfair','cheated','stiffed','stressed','helpless','anxiety','upset'],
+  4: ['draft','write','create','file','submit','send','compose','make'],
+  5: ['best approach','strategy','should I','worth it','chances','probability','advice','recommend'],
+  6: ['pattern','systemic','class action','lawyer','solicitor','escalate','sue','court','tribunal']
+};
+
+function bloomRoute(text) {
+  const lower = text.toLowerCase();
+  const scores = [0,0,0,0,0,0,0];
+  for (let ring = 0; ring < 7; ring++) {
+    for (const kw of BLOOM_KEYWORDS[ring]) {
+      if (lower.includes(kw)) scores[ring] += 1;
+    }
+  }
+  // Default to R4 (action/voice) if no strong signal — freelancers want documents
+  const max = Math.max(...scores);
+  if (max === 0) return { primary: 4, scores };
+  const primary = scores.indexOf(max);
+  return { primary, scores };
+}
+
+// ═══════════════════════════════════════════════════
+// L2 SWARM — 8+1 agents
+// ═══════════════════════════════════════════════════
+const AGENTS = [
+  { id: 'omega', symbol: 'Ω', name: 'Orchestrator', color: '#3B82F6', role: 'Routes case through agents, tracks escalation' },
+  { id: 'alpha', symbol: 'α', name: 'Case Analyst', color: '#10B981', role: 'Parses facts: platform, amount, jurisdiction, timeline' },
+  { id: 'beta', symbol: 'β', name: 'Document Drafter', color: '#8B5CF6', role: 'Generates LBAs, complaints, filings' },
+  { id: 'gamma', symbol: 'γ', name: 'Timeline Manager', color: '#F59E0B', role: 'Tracks deadlines, escalation windows' },
+  { id: 'delta', symbol: 'δ', name: 'Legal Researcher', color: '#EF4444', role: 'Finds applicable laws and precedents' },
+  { id: 'epsilon', symbol: 'ε', name: 'Rights Explainer', color: '#06B6D4', role: 'Plain English explanations of your rights' },
+  { id: 'zeta', symbol: 'ζ', name: 'Evidence Collector', color: '#84CC16', role: 'Guides evidence gathering, builds checklist' },
+  { id: 'eta', symbol: 'η', name: 'Template Optimiser', color: '#EC4899', role: 'Selects and customises document templates' },
+  { id: 'theta', symbol: 'θ', name: 'Escalation Engine', color: '#F97316', role: 'Identifies escalation channels, next steps' }
+];
+
+// ── Alpha: Case Analysis (T0 — rule-based) ──
+function agentAlpha(text) {
+  const lower = text.toLowerCase();
+  const facts = { platform: null, amount: null, currency: null, jurisdiction: null, issueType: 'payment', description: text, daysUnpaid: null };
+
+  // Platform detection
+  const platformMap = { 'dataannotation': 'dataannotation', 'data annotation': 'dataannotation', 'upwork': 'upwork', 'fiverr': 'fiverr', 'freelancer': 'freelancer', 'toptal': 'toptal', 'doordash': 'doordash', 'uber': 'uber', 'lyft': 'lyft', 'mturk': 'mturk', 'amazon mechanical turk': 'mturk' };
+  for (const [kw, id] of Object.entries(platformMap)) {
+    if (lower.includes(kw)) { facts.platform = id; break; }
+  }
+
+  // Amount detection
+  const amountMatch = text.match(/[\$\£\€]\s*([\d,]+(?:\.\d{2})?)/);
+  if (amountMatch) {
+    facts.amount = parseFloat(amountMatch[1].replace(/,/g, ''));
+    facts.currency = amountMatch[0][0] === '£' ? 'GBP' : amountMatch[0][0] === '€' ? 'EUR' : 'USD';
+  } else {
+    const numMatch = text.match(/(\d{1,3}(?:,\d{3})*(?:\.\d{2})?)\s*(?:dollars?|pounds?|usd|gbp)/i);
+    if (numMatch) facts.amount = parseFloat(numMatch[1].replace(/,/g, ''));
+  }
+
+  // Jurisdiction detection
+  const ukIndicators = ['uk','united kingdom','england','wales','scotland','london','manchester','birmingham','solicitor','tribunal','mcol','trading standards','citizens advice'];
+  const usIndicators = ['us','usa','united states','america','california','new york','texas','florida','attorney general','bbb','ftc','small claims'];
+  let ukScore = 0, usScore = 0;
+  for (const kw of ukIndicators) if (lower.includes(kw)) ukScore++;
+  for (const kw of usIndicators) if (lower.includes(kw)) usScore++;
+  if (facts.currency === 'GBP') ukScore += 2;
+  if (facts.currency === 'USD') usScore += 1;
+  facts.jurisdiction = ukScore > usScore ? 'UK' : usScore > ukScore ? 'US' : 'DUAL';
+
+  // Issue type
+  const issueMap = { 'not paid': 'payment', 'owe': 'payment', 'payment': 'payment', 'hold': 'payment_hold', 'suspended': 'suspension', 'banned': 'suspension', 'contract': 'contract', 'ip': 'ip', 'intellectual property': 'ip', 'discriminat': 'discrimination' };
+  for (const [kw, type] of Object.entries(issueMap)) {
+    if (lower.includes(kw)) { facts.issueType = type; break; }
+  }
+
+  // State detection for US
+  if (facts.jurisdiction === 'US' || facts.jurisdiction === 'DUAL') {
+    for (const state of LEGAL_DB.us.states) {
+      if (lower.includes(state[1].toLowerCase())) { facts.state = state[0]; break; }
+    }
+  }
+
+  return facts;
+}
+
+// ── Delta: Legal Research (T0) ──
+function agentDelta(facts) {
+  const laws = [];
+  const procedures = [];
+
+  if (facts.jurisdiction === 'UK' || facts.jurisdiction === 'DUAL') {
+    if (facts.issueType === 'payment' || facts.issueType === 'payment_hold') {
+      laws.push({ statute: 'Late Payment of Commercial Debts (Interest) Act 1998', sections: ['s.1','s.4','s.5A'], summary: 'You are entitled to statutory interest (base rate + 8%) and fixed compensation (£40-£100) for late payment of commercial debts.' });
+      laws.push({ statute: 'Consumer Rights Act 2015', sections: ['s.49','s.54'], summary: 'If you provided a service, the platform had an implied duty to pay for it with reasonable care and skill applied to their payment processes.' });
+      procedures.push(LEGAL_DB.uk.procedures.lba);
+      procedures.push(LEGAL_DB.uk.procedures.mcol);
+    }
+    laws.push({ statute: 'UK GDPR / Data Protection Act 2018', sections: ['Art.15'], summary: 'You can force the platform to hand over all data they hold on you via a Subject Access Request. They must comply within 30 days.' });
+    procedures.push(LEGAL_DB.uk.procedures.ico);
+  }
+
+  if (facts.jurisdiction === 'US' || facts.jurisdiction === 'DUAL') {
+    laws.push({ statute: 'FTC Act Section 5', sections: [], summary: 'Withholding earned payment may constitute an unfair or deceptive business practice. File a complaint with the FTC.' });
+    procedures.push(LEGAL_DB.us.procedures.ftc);
+    procedures.push(LEGAL_DB.us.procedures.bbb);
+    if (facts.state) {
+      const stateData = LEGAL_DB.us.states.find(s => s[0] === facts.state);
+      if (stateData) {
+        procedures.push({ name: `${stateData[1]} Attorney General`, desc: `File a consumer complaint. ${stateData[4]}. Small claims limit: $${stateData[2].toLocaleString()}.` });
+        if (stateData[3]) laws.push({ statute: stateData[3], sections: [], summary: `Your state has specific wage/payment protection laws.` });
+      }
+    }
+  }
+
+  return { laws, procedures };
+}
+
+// ── Epsilon: Rights Explainer (T0) ──
+function agentEpsilon(facts, legalResearch) {
+  const rights = [];
+  rights.push('You have the right to be paid for work you completed and that was approved.');
+
+  if (facts.jurisdiction === 'UK' || facts.jurisdiction === 'DUAL') {
+    rights.push('Under UK law, late payment of commercial debts automatically triggers statutory interest at Bank of England base rate + 8%, plus fixed compensation of £40-£100.');
+    rights.push('You can file a Subject Access Request under UK GDPR to force the platform to disclose all data they hold about you — including internal notes about your case.');
+    rights.push('If the platform owes you money, you can file a claim through Money Claim Online (MCOL) for as little as £35.');
+  }
+  if (facts.jurisdiction === 'US' || facts.jurisdiction === 'DUAL') {
+    rights.push('You can file complaints with the FTC, BBB, and your State Attorney General simultaneously. There is no limit to the number of regulatory complaints you can file.');
+    rights.push('BBB complaints are often resolved faster than support tickets because companies care about their BBB rating.');
+    if (facts.state) {
+      const stateData = LEGAL_DB.us.states.find(s => s[0] === facts.state);
+      if (stateData) rights.push(`In ${stateData[1]}, small claims court handles disputes up to $${stateData[2].toLocaleString()}.`);
+    }
+  }
+
+  return rights;
+}
+
+// ── Gamma: Timeline (T0) ──
+function agentGamma(facts) {
+  const timeline = [];
+  const today = new Date();
+  const addDays = (d, n) => { const r = new Date(d); r.setDate(r.getDate() + n); return r; };
+  const fmt = (d) => d.toISOString().split('T')[0];
+
+  if (facts.jurisdiction === 'UK' || facts.jurisdiction === 'DUAL') {
+    timeline.push({ day: 0, date: fmt(today), action: 'Send Letter Before Action', desc: 'Give the platform 14 days to pay. This is required before court action.', status: 'pending', agent: 'beta' });
+    timeline.push({ day: 14, date: fmt(addDays(today, 14)), action: 'LBA deadline expires', desc: 'If no payment received, proceed to file court claim.', status: 'pending', agent: 'gamma' });
+    timeline.push({ day: 15, date: fmt(addDays(today, 15)), action: 'File GDPR Subject Access Request', desc: 'Force disclosure of all data held about you. They have 30 days to comply.', status: 'pending', agent: 'beta' });
+    timeline.push({ day: 21, date: fmt(addDays(today, 21)), action: 'File MCOL claim', desc: 'Submit online court claim if LBA not resolved.', status: 'pending', agent: 'beta' });
+  }
+
+  if (facts.jurisdiction === 'US' || facts.jurisdiction === 'DUAL') {
+    const usStart = facts.jurisdiction === 'DUAL' ? 1 : 0;
+    timeline.push({ day: usStart, date: fmt(addDays(today, usStart)), action: 'Send Demand Letter', desc: 'Formal written demand for payment within 14 days.', status: 'pending', agent: 'beta' });
+    timeline.push({ day: usStart + 1, date: fmt(addDays(today, usStart + 1)), action: 'File BBB Complaint', desc: 'Companies typically respond to BBB complaints within 14 days.', status: 'pending', agent: 'beta' });
+    timeline.push({ day: usStart + 2, date: fmt(addDays(today, usStart + 2)), action: 'File FTC Report', desc: 'Report unfair business practices to the Federal Trade Commission.', status: 'pending', agent: 'beta' });
+    timeline.push({ day: usStart + 3, date: fmt(addDays(today, usStart + 3)), action: 'File State AG Complaint', desc: 'Submit consumer complaint to your state Attorney General.', status: 'pending', agent: 'beta' });
+    timeline.push({ day: usStart + 14, date: fmt(addDays(today, usStart + 14)), action: 'Demand letter deadline', desc: 'If no payment, escalate BBB complaint.', status: 'pending', agent: 'theta' });
+    timeline.push({ day: usStart + 30, date: fmt(addDays(today, usStart + 30)), action: 'File Small Claims Court', desc: 'If no resolution, file in small claims court.', status: 'pending', agent: 'beta' });
+  }
+
+  timeline.sort((a, b) => a.day - b.day);
+  return timeline;
+}
+
+// ── Zeta: Evidence Checklist (T0) ──
+function agentZeta(facts) {
+  const items = [
+    { text: 'Screenshots of completed/approved work', checked: false },
+    { text: 'Screenshots of account balance showing owed amount', checked: false },
+    { text: 'All email/chat correspondence with platform support', checked: false },
+    { text: 'Copy of platform Terms of Service (archived version)', checked: false },
+    { text: 'Payment history / transaction records', checked: false },
+    { text: 'Your contract or agreement with the platform', checked: false },
+    { text: 'Screenshots of any error messages or account restrictions', checked: false },
+    { text: 'Dates: when work was completed, when payment was due, when you first complained', checked: false },
+  ];
+
+  if (facts.platform) {
+    items.push({ text: `Export all available data from ${LEGAL_DB.platforms[facts.platform]?.name || facts.platform} account`, checked: false });
+  }
+  if (facts.jurisdiction === 'UK' || facts.jurisdiction === 'DUAL') {
+    items.push({ text: 'Note: you can force data disclosure via GDPR Subject Access Request', checked: false });
+  }
+
+  return items;
+}
+
+// ── Beta: Document Drafter (T0 — template-based) ──
+function agentBeta(facts, legalResearch) {
+  const docs = [];
+  const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  const platformName = LEGAL_DB.platforms[facts.platform]?.name || facts.platform || '[PLATFORM NAME]';
+  const amount = facts.amount ? (facts.currency === 'GBP' ? '£' : '$') + facts.amount.toLocaleString() : '[AMOUNT]';
+
+  if (facts.jurisdiction === 'UK' || facts.jurisdiction === 'DUAL') {
+    docs.push({
+      id: 'lba', type: 'Letter Before Action', jurisdiction: 'UK',
+      content: `LETTER BEFORE ACTION
+
+${today}
+
+To: ${platformName}
+[Platform registered address]
+
+Dear Sir/Madam,
+
+RE: OUTSTANDING PAYMENT OF ${amount} — PRE-ACTION PROTOCOL FOR DEBT CLAIMS
+
+I am writing in accordance with the Pre-Action Protocol for Debt Claims (Practice Direction — Pre-Action Conduct and Protocols) to demand payment of ${amount} owed to me for services rendered.
+
+THE DEBT
+I completed work on your platform which was approved and accepted. The total outstanding amount is ${amount}. Despite the work being completed and approved, payment has not been made.
+
+LEGAL BASIS
+Under the Late Payment of Commercial Debts (Interest) Act 1998:
+- I am entitled to statutory interest at the Bank of England base rate plus 8% per annum (s.4)
+- I am entitled to fixed compensation of £${facts.amount && facts.amount < 1000 ? '40' : facts.amount && facts.amount < 10000 ? '70' : '100'} for the inconvenience of late payment (s.5A)
+
+Under the Consumer Rights Act 2015, s.49-50, services must be performed with reasonable care and skill, which includes the obligation to process payment for completed work.
+
+WHAT I REQUIRE
+Payment of ${amount} plus statutory interest and compensation within 14 days of the date of this letter.
+
+CONSEQUENCES OF NON-PAYMENT
+If payment is not received within 14 days, I will issue proceedings through the County Court (Money Claim Online) without further notice. I will also seek recovery of court fees and statutory interest.
+
+I also reserve the right to:
+- Report this matter to Trading Standards
+- File a complaint with the Information Commissioner's Office regarding data protection
+- Submit a Subject Access Request under UK GDPR Article 15
+
+Yours faithfully,
+[YOUR NAME]
+[YOUR ADDRESS]
+[YOUR EMAIL]`
+    });
+
+    docs.push({
+      id: 'sar', type: 'Subject Access Request (GDPR)', jurisdiction: 'UK',
+      content: `SUBJECT ACCESS REQUEST
+Under Article 15 of the UK General Data Protection Regulation
+
+${today}
+
+To: ${platformName} — Data Protection Officer
+[Platform registered address]
+
+Dear Data Protection Officer,
+
+I am making a Subject Access Request under Article 15 of the UK GDPR and Section 45 of the Data Protection Act 2018.
+
+Please provide me with:
+
+1. All personal data you hold about me
+2. All internal communications, notes, and records relating to my account
+3. All records relating to payment processing for my account
+4. Any automated decision-making applied to my account (Article 22)
+5. Records of any third parties my data has been shared with (Article 15(1)(c))
+
+My account details: [YOUR PLATFORM USERNAME/EMAIL]
+
+You are required to respond within 30 calendar days (Article 12(3)). Failure to comply will result in a complaint to the Information Commissioner's Office.
+
+Yours faithfully,
+[YOUR NAME]
+[YOUR EMAIL]`
+    });
+  }
+
+  if (facts.jurisdiction === 'US' || facts.jurisdiction === 'DUAL') {
+    docs.push({
+      id: 'demand', type: 'Demand Letter', jurisdiction: 'US',
+      content: `FORMAL DEMAND FOR PAYMENT
+
+${today}
+
+To: ${platformName}
+[Platform corporate address]
+
+RE: DEMAND FOR IMMEDIATE PAYMENT OF ${amount}
+
+Dear Sir/Madam,
+
+NOTICE OF DEMAND
+
+I hereby demand payment of ${amount} for services I performed on your platform that were completed, approved, and accepted.
+
+FACTS
+I completed work assignments on your platform totaling ${amount}. This work was approved and accepted by your quality assurance process. Despite this, you have failed to remit payment.
+
+LEGAL BASIS
+Withholding earned payment constitutes:
+1. Breach of contract (your Terms of Service obligate payment for approved work)
+2. Potential violation of FTC Act Section 5 (unfair business practices)
+3. Unjust enrichment (you received the benefit of my labor without payment)
+
+DEMAND
+I demand full payment of ${amount} within fourteen (14) days of receipt of this letter.
+
+NOTICE
+If payment is not received within 14 days, I intend to:
+- File a complaint with the Federal Trade Commission
+- File a complaint with the Better Business Bureau
+- File a complaint with the State Attorney General
+- Pursue recovery through Small Claims Court
+
+This letter serves as formal notice of my intent to pursue all available legal remedies.
+
+Sincerely,
+[YOUR NAME]
+[YOUR ADDRESS]
+[YOUR EMAIL]`
+    });
+
+    docs.push({
+      id: 'bbb', type: 'BBB Complaint', jurisdiction: 'US',
+      content: `BBB COMPLAINT — READY TO FILE AT bbb.org/file-a-complaint
+
+Company: ${platformName}
+Category: Payment/Billing Issues
+
+COMPLAINT:
+I completed work on ${platformName}'s platform totaling ${amount}. The work was approved and accepted by the platform. Despite this, ${platformName} has failed to release payment.
+
+I have attempted to resolve this through their support channels but have received only automated responses with no resolution.
+
+DESIRED RESOLUTION:
+Immediate release of ${amount} in earned payment.
+
+SUPPORTING INFORMATION:
+- Work was completed and approved on the platform
+- Payment has been withheld without legitimate cause
+- Support tickets have not resulted in resolution
+- I have documentary evidence of completed and approved work`
+    });
+
+    docs.push({
+      id: 'ftc', type: 'FTC Complaint', jurisdiction: 'US',
+      content: `FTC COMPLAINT — FILE AT reportfraud.ftc.gov
+
+Company: ${platformName}
+Issue: Unfair Business Practices — Withholding Earned Payment
+
+DESCRIPTION:
+${platformName} is withholding ${amount} in earned payment for completed and approved work on their platform. This constitutes an unfair business practice under FTC Act Section 5.
+
+The company has:
+1. Accepted and approved my completed work
+2. Failed to release payment for that work
+3. Failed to provide adequate customer support to resolve the issue
+4. Used automated responses instead of meaningful dispute resolution
+
+AMOUNT INVOLVED: ${amount}
+PAYMENT METHOD: [PayPal/direct deposit/other]
+
+I believe this may be a pattern affecting multiple freelancers/contractors on this platform.`
+    });
+  }
+
+  return docs;
+}
+
+// ── Theta: Escalation Analysis (T0) ──
+function agentTheta(facts) {
+  const channels = [];
+
+  if (facts.jurisdiction === 'UK' || facts.jurisdiction === 'DUAL') {
+    channels.push({ channel: 'Letter Before Action', priority: 1, status: 'ready', desc: 'Required first step. Gives 14 days to pay.' });
+    channels.push({ channel: 'Money Claim Online (MCOL)', priority: 2, status: 'after_lba', desc: 'Court claim if LBA fails. Fee from £35.' });
+    channels.push({ channel: 'GDPR Subject Access Request', priority: 2, status: 'ready', desc: 'Force disclosure of internal records.' });
+    channels.push({ channel: 'Trading Standards', priority: 3, status: 'ready', desc: 'Report unfair business practices.' });
+    channels.push({ channel: 'ICO Complaint', priority: 3, status: 'if_sar_ignored', desc: 'If they ignore your SAR.' });
+  }
+  if (facts.jurisdiction === 'US' || facts.jurisdiction === 'DUAL') {
+    channels.push({ channel: 'BBB Complaint', priority: 1, status: 'ready', desc: 'High response rate. File immediately.' });
+    channels.push({ channel: 'FTC Report', priority: 1, status: 'ready', desc: 'Federal regulatory complaint.' });
+    channels.push({ channel: 'State Attorney General', priority: 2, status: 'ready', desc: 'State consumer protection.' });
+    channels.push({ channel: 'Small Claims Court', priority: 3, status: 'after_demand', desc: 'If demand letter fails.' });
+  }
+  channels.push({ channel: 'Social Media (Trustpilot/X)', priority: 4, status: 'ready', desc: 'Public pressure. Use after formal channels.' });
+
+  channels.sort((a, b) => a.priority - b.priority);
+  return channels;
+}
+
+// ── Strength Scorer ──
+function scoreStrength(facts, legalResearch) {
+  let score = 40; // baseline for any payment dispute
+  if (facts.amount) score += 5;
+  if (facts.platform && LEGAL_DB.platforms[facts.platform]) score += 10; // known platform = more data
+  if (legalResearch.laws.length > 2) score += 10;
+  if (legalResearch.procedures.length > 2) score += 10;
+  if (facts.issueType === 'payment' || facts.issueType === 'payment_hold') score += 10; // strongest case type
+  if (facts.jurisdiction === 'DUAL') score += 5; // dual track = more options
+  return Math.min(95, score);
+}
+
+// ═══════════════════════════════════════════════════
+// L3 CASCADE — agnostic LLM inference
+// ═══════════════════════════════════════════════════
+const LLM_PROVIDERS = {
+  openai:     { baseUrl: 'https://api.openai.com/v1',               model: 'gpt-4o',              adapter: 'openai', keyHint: 'sk-...' },
+  deepseek:   { baseUrl: 'https://api.deepseek.com',                model: 'deepseek-chat',       adapter: 'openai', keyHint: 'sk-...' },
+  groq:       { baseUrl: 'https://api.groq.com/openai/v1',          model: 'llama-3.3-70b-versatile', adapter: 'openai', keyHint: 'gsk_...' },
+  together:   { baseUrl: 'https://api.together.xyz/v1',             model: 'meta-llama/Llama-3.3-70B-Instruct-Turbo', adapter: 'openai', keyHint: 'sk-...' },
+  mistral:    { baseUrl: 'https://api.mistral.ai/v1',               model: 'mistral-large-latest', adapter: 'openai', keyHint: 'sk-...' },
+  openrouter: { baseUrl: 'https://openrouter.ai/api/v1',            model: 'google/gemini-2.0-flash-exp:free', adapter: 'openai', keyHint: 'sk-or-...' },
+  ollama:     { baseUrl: 'http://localhost:11434/v1',                model: 'llama3.2',            adapter: 'openai', keyHint: '(none — leave empty)', noKey: true },
+  lmstudio:   { baseUrl: 'http://localhost:1234/v1',                 model: 'loaded-model',        adapter: 'openai', keyHint: '(none — leave empty)', noKey: true },
+  gemini:     { baseUrl: 'https://generativelanguage.googleapis.com', model: 'gemini-2.0-flash',   adapter: 'gemini', keyHint: 'AIza...' },
+  claude:     { baseUrl: 'https://api.anthropic.com',                model: 'claude-sonnet-4-20250514', adapter: 'claude', keyHint: 'sk-ant-...' },
+  custom:     { baseUrl: '',                                         model: '',                    adapter: 'openai', keyHint: '' },
+};
+
+// OpenAI-compatible adapter — covers OpenAI, DeepSeek, Groq, Together, Mistral, OpenRouter, Ollama, LM Studio, and any compatible endpoint
+async function callOpenAI(baseUrl, key, model, system, user) {
+  const headers = { 'Content-Type': 'application/json' };
+  if (key) headers['Authorization'] = `Bearer ${key}`;
+  const res = await fetch(`${baseUrl.replace(/\/+$/, '')}/chat/completions`, {
+    method: 'POST', headers,
+    body: JSON.stringify({ model, messages: [{ role: 'system', content: system }, { role: 'user', content: user }], max_tokens: 2000 })
+  });
+  if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+  const data = await res.json();
+  return data.choices?.[0]?.message?.content || null;
+}
+
+async function callGemini(key, model, system, user) {
+  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ system_instruction: { parts: [{ text: system }] }, contents: [{ parts: [{ text: user }] }] })
+  });
+  if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+  const data = await res.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text || null;
+}
+
+async function callClaude(key, model, system, user) {
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+    body: JSON.stringify({ model, max_tokens: 2000, system, messages: [{ role: 'user', content: user }] })
+  });
+  if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+  const data = await res.json();
+  return data.content?.[0]?.text || null;
+}
+
+async function cascadeInfer(systemPrompt, userMessage) {
+  const settings = await dbGet('settings', 'main').catch(() => null);
+  const provider = settings?.provider || 'none';
+  if (provider === 'none') return null;
+
+  const baseUrl = settings?.llmBaseUrl || '';
+  const key = settings?.llmApiKey || '';
+  const model = settings?.llmModel || '';
+  const adapterType = settings?.llmAdapter || 'openai';
+
+  try {
+    if (adapterType === 'gemini') return await callGemini(key, model, systemPrompt, userMessage);
+    if (adapterType === 'claude') return await callClaude(key, model, systemPrompt, userMessage);
+    return await callOpenAI(baseUrl, key, model, systemPrompt, userMessage);
+  } catch (e) {
+    console.warn(`LLM (${provider}) failed:`, e.message);
+    return null; // T0 fallback
+  }
+}
+
+// Provider change handler
+window.onProviderChange = function() {
+  const provider = document.getElementById('settingProvider').value;
+  const fieldsEl = document.getElementById('llmFields');
+  const testResult = document.getElementById('llmTestResult');
+  testResult.style.display = 'none';
+
+  if (provider === 'none') {
+    fieldsEl.style.display = 'none';
+    return;
+  }
+  fieldsEl.style.display = 'block';
+
+  const preset = LLM_PROVIDERS[provider] || LLM_PROVIDERS.custom;
+  document.getElementById('llmBaseUrl').value = preset.baseUrl;
+  document.getElementById('llmBaseUrl').placeholder = preset.baseUrl || 'https://your-api.example.com/v1';
+  document.getElementById('llmModel').value = preset.model;
+  document.getElementById('llmApiKey').placeholder = preset.keyHint;
+  document.getElementById('llmApiKey').value = '';
+
+  // Show/hide base URL for non-custom presets
+  const urlRow = document.getElementById('lblBaseUrl');
+  const urlInput = document.getElementById('llmBaseUrl');
+  if (provider !== 'custom' && preset.adapter !== 'gemini' && preset.adapter !== 'claude') {
+    urlRow.textContent = 'API Base URL (auto-filled)';
+  } else if (preset.adapter === 'gemini' || preset.adapter === 'claude') {
+    urlRow.textContent = 'API Base URL (fixed)';
+    urlInput.disabled = true;
+  } else {
+    urlRow.textContent = 'API Base URL';
+  }
+  if (preset.adapter !== 'gemini' && preset.adapter !== 'claude') urlInput.disabled = false;
+};
+
+// Test LLM connection
+window.testLLM = async function() {
+  const resultEl = document.getElementById('llmTestResult');
+  const btn = document.getElementById('btnTestLLM');
+  resultEl.style.display = 'block';
+  resultEl.textContent = 'Testing...';
+  resultEl.style.color = 'var(--muted)';
+  btn.disabled = true;
+
+  try {
+    const result = await cascadeInferDirect(
+      document.getElementById('llmBaseUrl').value,
+      document.getElementById('llmApiKey').value,
+      document.getElementById('llmModel').value,
+      LLM_PROVIDERS[document.getElementById('settingProvider').value]?.adapter || 'openai',
+      'You are a test. Reply with exactly: GROUNDLEVEL OK',
+      'ping'
+    );
+    if (result) {
+      resultEl.textContent = '&#10003; Connected — ' + result.substring(0, 60);
+      resultEl.innerHTML = resultEl.textContent;
+      resultEl.style.color = 'var(--green-dark)';
+    } else {
+      resultEl.textContent = '&#10007; No response received';
+      resultEl.innerHTML = resultEl.textContent;
+      resultEl.style.color = 'var(--red)';
+    }
+  } catch (e) {
+    resultEl.textContent = '&#10007; ' + e.message;
+    resultEl.innerHTML = resultEl.textContent;
+    resultEl.style.color = 'var(--red)';
+  }
+  btn.disabled = false;
+};
+
+// Direct inference for test (bypasses settings lookup)
+async function cascadeInferDirect(baseUrl, key, model, adapter, system, user) {
+  if (adapter === 'gemini') return await callGemini(key, model, system, user);
+  if (adapter === 'claude') return await callClaude(key, model, system, user);
+  return await callOpenAI(baseUrl, key, model, system, user);
+}
+
+// ═══════════════════════════════════════════════════
+// L7 ASS — Application State + Lifecycle
+// ═══════════════════════════════════════════════════
+let currentCase = null;
+let currentScreen = 'landing';
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+  currentScreen = id;
+
+  // Show bottom nav after landing
+  const nav = document.getElementById('bottomNav');
+  if (id !== 'landing' && id !== 'describe') {
+    nav.classList.add('visible');
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.toggle('active', n.dataset.screen === id));
+  } else {
+    nav.classList.remove('visible');
+  }
+
+  window.scrollTo(0, 0);
+}
+
+async function analyseCase() {
+  const input = document.getElementById('caseInput').value.trim();
+  if (!input) return;
+
+  showScreen('analysis');
+
+  // Build agent list UI
+  const agentListEl = document.getElementById('agentList');
+  agentListEl.innerHTML = AGENTS.map(a => `
+    <div class="agent-row" id="agent-${a.id}">
+      <div class="agent-symbol" style="background:${a.color}">${a.symbol}</div>
+      <div><div class="agent-name">${a.name}</div><div class="agent-status">${a.role}</div></div>
+    </div>
+  `).join('');
+
+  const activate = (id) => {
+    const el = document.getElementById('agent-' + id);
+    if (el) { el.classList.add('active'); el.innerHTML += '<div class="agent-spinner"></div>'; }
+  };
+  const complete = (id) => {
+    const el = document.getElementById('agent-' + id);
+    if (el) { el.classList.remove('active'); el.classList.add('done'); const sp = el.querySelector('.agent-spinner'); if (sp) sp.remove(); }
+  };
+  const status = (msg) => { document.getElementById('analysisStatus').textContent = msg; };
+
+  await sleep(300);
+
+  // ── Run agents sequentially ──
+  status('Omega routing case...');
+  activate('omega');
+  const bloom = bloomRoute(input);
+  await sleep(400);
+  complete('omega');
+
+  status('Alpha parsing facts...');
+  activate('alpha');
+  const facts = agentAlpha(input);
+  facts.bloom = bloom;
+  await sleep(500);
+  complete('alpha');
+
+  status('Delta researching law...');
+  activate('delta');
+  const legalResearch = agentDelta(facts);
+  await sleep(500);
+  complete('delta');
+
+  status('Epsilon explaining rights...');
+  activate('epsilon');
+  const rights = agentEpsilon(facts, legalResearch);
+  await sleep(400);
+  complete('epsilon');
+
+  status('Zeta building evidence checklist...');
+  activate('zeta');
+  const evidence = agentZeta(facts);
+  await sleep(300);
+  complete('zeta');
+
+  status('Gamma building timeline...');
+  activate('gamma');
+  const timeline = agentGamma(facts);
+  await sleep(400);
+  complete('gamma');
+
+  status('Beta drafting documents...');
+  activate('beta');
+  const documents = agentBeta(facts, legalResearch);
+  await sleep(600);
+  complete('beta');
+
+  status('Eta optimising templates...');
+  activate('eta');
+  await sleep(300);
+  complete('eta');
+
+  status('Theta mapping escalation channels...');
+  activate('theta');
+  const escalation = agentTheta(facts);
+  await sleep(400);
+  complete('theta');
+
+  // ── Try AI enhancement if available ──
+  let aiEnhanced = false;
+  try {
+    const aiResult = await cascadeInfer(
+      `You are GroundLevel, an AI legal information tool for freelancers. You provide legal INFORMATION, not legal advice. Always include the disclaimer that users should consult a solicitor/attorney. Analyse this freelancer's payment dispute and provide: 1) A strength assessment, 2) Key rights summary, 3) Recommended approach. Be empowering, factual, and warm. Jurisdiction: ${facts.jurisdiction}.`,
+      input
+    );
+    if (aiResult) {
+      aiEnhanced = true;
+      // Enhance rights with AI content
+      rights.push('--- AI-Enhanced Analysis ---');
+      rights.push(aiResult);
+    }
+  } catch (e) { /* T0 fallback is fine */ }
+
+  // ── Score and display ──
+  const strength = scoreStrength(facts, legalResearch);
+
+  status('Analysis complete' + (aiEnhanced ? ' (AI-enhanced)' : ' (offline mode)'));
+
+  // Store case
+  currentCase = {
+    id: 'case_' + Date.now(),
+    created: new Date().toISOString(),
+    updated: new Date().toISOString(),
+    status: 'analysed',
+    facts, legalResearch, rights, evidence, timeline, documents, escalation,
+    strength, bloom, notes: [], input
+  };
+
+  await dbPut('cases', currentCase);
+
+  // Render results
+  renderAnalysisResults(currentCase);
+}
+
+function renderAnalysisResults(c) {
+  const resultsEl = document.getElementById('analysisResults');
+  resultsEl.style.display = 'block';
+
+  // Strength ring
+  const circumference = 2 * Math.PI * 52;
+  const offset = circumference - (c.strength / 100) * circumference;
+  document.getElementById('strengthCircle').style.strokeDashoffset = offset;
+  document.getElementById('strengthValue').textContent = c.strength;
+  const circle = document.getElementById('strengthCircle');
+  circle.style.stroke = c.strength >= 70 ? 'var(--green)' : c.strength >= 50 ? 'var(--amber)' : 'var(--red)';
+  document.getElementById('strengthLabel').textContent = c.strength >= 70 ? 'Strong case' : c.strength >= 50 ? 'Moderate case' : 'Needs more evidence';
+
+  // Rights
+  document.getElementById('rightsContent').innerHTML = c.rights.map(r => `<p style="margin-bottom:8px;padding-left:12px;border-left:3px solid var(--green)">${r}</p>`).join('');
+
+  // Legal position
+  document.getElementById('legalContent').innerHTML = c.legalResearch.laws.map(l => `
+    <div style="margin-bottom:12px;padding:12px;background:var(--surface-2);border-radius:8px">
+      <strong>${l.statute}</strong> ${l.sections.length ? '(' + l.sections.join(', ') + ')' : ''}
+      <p class="text-sm text-muted mt-2">${l.summary}</p>
+    </div>
+  `).join('');
+
+  // Recommended actions
+  document.getElementById('actionsContent').innerHTML = c.escalation.map(e => `
+    <div class="flex items-center gap-3" style="padding:8px 0;border-bottom:1px solid var(--surface-2)">
+      <span class="badge ${e.priority <= 1 ? 'badge-green' : e.priority <= 2 ? 'badge-blue' : 'badge-purple'}">P${e.priority}</span>
+      <div><strong>${e.channel}</strong><div class="text-xs text-muted">${e.desc}</div></div>
+    </div>
+  `).join('');
+}
+
+function buildActionPlan() {
+  if (!currentCase) return;
+  showScreen('dashboard');
+  renderDashboard(currentCase);
+}
+
+function renderDashboard(c) {
+  const platformName = LEGAL_DB.platforms[c.facts.platform]?.name || c.facts.platform || 'Unknown Platform';
+  const amount = c.facts.amount ? (c.facts.currency === 'GBP' ? '£' : '$') + c.facts.amount.toLocaleString() : '-';
+
+  document.getElementById('dashPlatform').textContent = platformName;
+  document.getElementById('dashSummary').textContent = `${c.facts.issueType} dispute · ${c.facts.jurisdiction} jurisdiction`;
+  document.getElementById('dashAmount').textContent = amount;
+  document.getElementById('dashJurisdiction').textContent = c.facts.jurisdiction;
+
+  // Documents
+  document.getElementById('documentsList').innerHTML = c.documents.map(d => `
+    <div class="doc-card" onclick="viewDocument('${d.id}')">
+      <div class="doc-card-header">
+        <span class="doc-card-title">${d.type}</span>
+        <span class="badge ${d.jurisdiction === 'UK' ? 'badge-blue' : 'badge-purple'}">${d.jurisdiction}</span>
+      </div>
+      <div class="doc-card-actions">
+        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();copyDoc('${d.id}')">Copy</button>
+        <button class="btn btn-secondary btn-sm" onclick="event.stopPropagation();downloadDoc('${d.id}')">Download</button>
+      </div>
+    </div>
+  `).join('');
+
+  // Evidence checklist
+  document.getElementById('evidenceChecklist').innerHTML = c.evidence.map((e, i) => `
+    <div class="check-item">
+      <div class="check-box ${e.checked ? 'checked' : ''}" onclick="toggleEvidence(${i})">${e.checked ? '&#10003;' : ''}</div>
+      <span class="check-text ${e.checked ? 'done' : ''}">${e.text}</span>
+    </div>
+  `).join('');
+
+  // Timeline
+  document.getElementById('timelineList').innerHTML = c.timeline.map(t => `
+    <div class="timeline-item">
+      <div class="timeline-dot ${t.status}"></div>
+      <div class="timeline-date">Day ${t.day} · ${t.date}</div>
+      <div class="timeline-title">${t.action}</div>
+      <div class="timeline-desc">${t.desc}</div>
+    </div>
+  `).join('');
+
+  // Bottom nav
+  document.getElementById('bottomNav').classList.add('visible');
+
+  // Update case count
+  updateCaseCount();
+}
+
+// ═══════════════════════════════════════════════════
+// DOCUMENT VIEWER
+// ═══════════════════════════════════════════════════
+window.viewDocument = function(docId) {
+  const doc = currentCase.documents.find(d => d.id === docId);
+  if (!doc) return;
+  document.getElementById('docModalTitle').textContent = doc.type;
+  document.getElementById('docModalContent').textContent = doc.content;
+  document.getElementById('docModal').classList.add('open');
+};
+
+window.copyDoc = function(docId) {
+  const doc = currentCase.documents.find(d => d.id === docId);
+  if (doc) navigator.clipboard.writeText(doc.content).then(() => alert('Copied to clipboard!'));
+};
+
+window.downloadDoc = function(docId) {
+  const doc = currentCase.documents.find(d => d.id === docId);
+  if (!doc) return;
+  const blob = new Blob([doc.content], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = doc.type.replace(/[^a-zA-Z0-9]/g, '_') + '.txt';
+  a.click();
+  URL.revokeObjectURL(a.href);
+};
+
+window.closeDocModal = function() {
+  document.getElementById('docModal').classList.remove('open');
+};
+
+window.copyDocument = function() {
+  const text = document.getElementById('docModalContent').textContent;
+  navigator.clipboard.writeText(text).then(() => alert('Copied!'));
+};
+
+window.downloadDocument = function() {
+  const text = document.getElementById('docModalContent').textContent;
+  const title = document.getElementById('docModalTitle').textContent;
+  const blob = new Blob([text], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = title.replace(/[^a-zA-Z0-9]/g, '_') + '.txt';
+  a.click();
+};
+
+// ═══════════════════════════════════════════════════
+// EVIDENCE + TRACKING
+// ═══════════════════════════════════════════════════
+window.toggleEvidence = function(idx) {
+  if (!currentCase) return;
+  currentCase.evidence[idx].checked = !currentCase.evidence[idx].checked;
+  currentCase.updated = new Date().toISOString();
+  dbPut('cases', currentCase);
+  renderDashboard(currentCase);
+};
+
+window.markActionDone = function() {
+  if (!currentCase) return;
+  const pending = currentCase.timeline.find(t => t.status === 'pending');
+  if (pending) {
+    pending.status = 'done';
+    currentCase.updated = new Date().toISOString();
+    dbPut('cases', currentCase);
+    renderTracking(currentCase);
+  }
+};
+
+window.skipAction = function() {
+  if (!currentCase) return;
+  const pending = currentCase.timeline.find(t => t.status === 'pending');
+  if (pending) {
+    pending.status = 'done';
+    currentCase.updated = new Date().toISOString();
+    dbPut('cases', currentCase);
+    renderTracking(currentCase);
+  }
+};
+
+window.addTrackingNote = function() {
+  const note = document.getElementById('trackingNote').value.trim();
+  if (!note || !currentCase) return;
+  currentCase.notes.push({ date: new Date().toISOString(), text: note });
+  currentCase.updated = new Date().toISOString();
+  dbPut('cases', currentCase);
+  document.getElementById('trackingNote').value = '';
+  renderTracking(currentCase);
+};
+
+function renderTracking(c) {
+  const next = c.timeline.find(t => t.status === 'pending');
+  if (next) {
+    document.getElementById('nextActionTitle').textContent = next.action;
+    document.getElementById('nextActionDesc').textContent = `Day ${next.day} · ${next.date} · ${next.desc}`;
+  } else {
+    document.getElementById('nextActionTitle').textContent = 'All actions complete';
+    document.getElementById('nextActionDesc').textContent = 'Consider filing in court if unresolved, or mark case as resolved.';
+  }
+
+  document.getElementById('trackingTimeline').innerHTML = c.timeline.map(t => `
+    <div class="timeline-item">
+      <div class="timeline-dot ${t.status}"></div>
+      <div class="timeline-date">Day ${t.day} · ${t.date}</div>
+      <div class="timeline-title">${t.action}</div>
+      <div class="timeline-desc">${t.desc}</div>
+    </div>
+  `).join('') + (c.notes.length ? '<h3 class="mt-4 mb-3">Notes</h3>' + c.notes.map(n => `
+    <div style="padding:8px 12px;margin-bottom:8px;background:var(--surface-2);border-radius:8px">
+      <div class="text-xs text-muted">${new Date(n.date).toLocaleString()}</div>
+      <div class="text-sm mt-2">${n.text}</div>
+    </div>
+  `).join('') : '');
+}
+
+// ═══════════════════════════════════════════════════
+// EXPORT / RESOLUTION
+// ═══════════════════════════════════════════════════
+window.exportCase = function() {
+  if (!currentCase) return;
+  const data = JSON.stringify(currentCase, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `groundlevel-case-${currentCase.id}.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+};
+
+window.saveOutcome = function() {
+  if (!currentCase) return;
+  currentCase.outcome = {
+    result: document.getElementById('outcomeResult').value,
+    amountRecovered: document.getElementById('outcomeAmount').value,
+    notes: document.getElementById('outcomeNotes').value,
+    date: new Date().toISOString()
+  };
+  currentCase.status = 'resolved';
+  currentCase.updated = new Date().toISOString();
+  dbPut('cases', currentCase);
+  alert('Case saved. Thank you for recording the outcome.');
+};
+
+window.newCase = function() {
+  currentCase = null;
+  document.getElementById('caseInput').value = '';
+  document.getElementById('analysisResults').style.display = 'none';
+  showScreen('landing');
+};
+
+// ═══════════════════════════════════════════════════
+// SETTINGS
+// ═══════════════════════════════════════════════════
+window.closeSettings = function() { document.getElementById('settingsModal').classList.remove('open'); };
+
+window.saveSettings = async function() {
+  const provider = document.getElementById('settingProvider').value;
+  const preset = LLM_PROVIDERS[provider] || {};
+  const settings = {
+    id: 'main',
+    provider,
+    llmBaseUrl: document.getElementById('llmBaseUrl').value,
+    llmApiKey: document.getElementById('llmApiKey').value,
+    llmModel: document.getElementById('llmModel').value,
+    llmAdapter: preset.adapter || 'openai',
+    jurisdiction: document.getElementById('settingJurisdiction').value,
+    darkMode: document.documentElement.getAttribute('data-theme') === 'dark'
+  };
+  await dbPut('settings', settings);
+  updateLLMChip(provider);
+  closeSettings();
+};
+
+async function loadSettings() {
+  try {
+    const s = await dbGet('settings', 'main');
+    if (s) {
+      if (s.provider) {
+        document.getElementById('settingProvider').value = s.provider;
+        if (s.provider !== 'none') {
+          document.getElementById('llmFields').style.display = 'block';
+          if (s.llmBaseUrl) document.getElementById('llmBaseUrl').value = s.llmBaseUrl;
+          if (s.llmApiKey) document.getElementById('llmApiKey').value = s.llmApiKey;
+          if (s.llmModel) document.getElementById('llmModel').value = s.llmModel;
+        }
+      }
+      if (s.jurisdiction) document.getElementById('settingJurisdiction').value = s.jurisdiction;
+      if (s.darkMode) document.documentElement.setAttribute('data-theme', 'dark');
+      updateLLMChip(s.provider);
+    }
+  } catch (e) {}
+}
+
+function updateLLMChip(provider) {
+  const chip = document.getElementById('llmChip');
+  if (!chip) return;
+  if (provider && provider !== 'none') {
+    const name = document.querySelector(`#settingProvider option[value="${provider}"]`)?.textContent || provider;
+    chip.textContent = '⚡ Powered by ' + name;
+    chip.classList.add('active');
+  } else {
+    chip.textContent = '🤖 Plug in any LLM to power up';
+    chip.classList.remove('active');
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// EVENT HANDLERS
+// ═══════════════════════════════════════════════════
+document.getElementById('btnSettings').addEventListener('click', () => {
+  document.getElementById('settingsModal').classList.add('open');
+});
+
+document.getElementById('btnTheme').addEventListener('click', () => {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.documentElement.setAttribute('data-theme', isDark ? '' : 'dark');
+});
+
+// Jurisdiction toggle
+document.querySelectorAll('.jur-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.jur-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+// Tabs
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const parent = tab.closest('.screen') || document;
+    parent.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    parent.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+// Bottom nav
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    showScreen(item.dataset.screen);
+    if (item.dataset.screen === 'tracking' && currentCase) renderTracking(currentCase);
+  });
+});
+
+// Close modals on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+});
+
+// Close modals on Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+  }
+});
+
+// Expose functions to global scope for onclick handlers
+window.showScreen = showScreen;
+window.analyseCase = analyseCase;
+window.buildActionPlan = buildActionPlan;
+window.viewDocument = viewDocument;
+window.copyDocument = copyDocument;
+window.downloadDocument = downloadDocument;
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+async function updateCaseCount() {
+  try {
+    const cases = await dbGetAll('cases');
+    const count = cases.length;
+    document.getElementById('statCases').textContent = count;
+    document.getElementById('statPlural').textContent = count === 1 ? '' : 's';
+    document.getElementById('caseCountBar').style.display = count > 0 ? 'block' : 'none';
+  } catch (e) {}
+}
+
+// ═══════════════════════════════════════════════════
+// STARTUP
+// ═══════════════════════════════════════════════════
+(async function init() {
+  await openDB();
+  await loadSettings();
+  await updateCaseCount();
+  console.log('◊·κ=1 GROUNDLEVEL v2 / sovereign / dual jurisdiction UK+US / v18 protocol / the playing field leveller');
+})();
+</script>
+</body>
+</html>

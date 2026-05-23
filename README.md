@@ -1,146 +1,98 @@
-# GroundLevel 🟢
-### UK Rights Protection App
+# GROUNDLEVEL v2
 
-Record encounters. Detect bluffs. Analyse against actual UK law. File complaints in one click.
+**Free AI legal agent for freelancers. One HTML file. Works offline. Your data never leaves your device.**
 
----
+Been stiffed by a platform? GroundLevel identifies your rights, drafts every document, and tells you exactly where to file.
 
-## Stack
+## Download
 
-- **Next.js 14** — frontend + API routes
-- **Supabase** — auth + database
-- **Anthropic Claude** — AI legal analysis + complaint generation
-- **Stripe** — subscriptions (£9/month Pro)
+**[Download GroundLevel-v2.html](https://sjgant80-hub.github.io/groundlevel/)** — save it anywhere, open in Chrome. That's it.
 
----
+No install. No account. No server. One file.
 
-## Deploy on Replit (30 minutes)
+## What it does
 
-### 1. Create Replit project
+You describe what happened in plain English. GroundLevel's 9-agent system parses your situation and generates:
 
-1. Go to [replit.com](https://replit.com) → New Repl
-2. Choose **Next.js** template
-3. Delete the boilerplate, paste this entire project folder in
+- **Legal analysis** — which laws protect you, how strong your case is (0-95 score)
+- **Ready-to-send documents** — Letter Before Action (UK), Demand Letter (US), GDPR Subject Access Request, BBB Complaint, FTC Complaint
+- **Evidence checklist** — exactly what to gather
+- **Escalation timeline** — day-by-day action plan with deadlines
+- **Tracking** — mark steps done, add notes, export your case
 
-### 2. Set up Supabase
+## Dual jurisdiction
 
-1. Go to [supabase.com](https://supabase.com) → New project
-2. Go to **SQL Editor** → paste contents of `supabase_schema.sql` → Run
-3. Go to **Settings → API** → copy:
-   - Project URL
-   - anon/public key
-   - service_role key (keep secret)
-4. Go to **Authentication → Settings** → set Site URL to your Replit URL
+Works for **UK** and **US** freelancers:
 
-### 3. Set up Stripe
+| UK | US |
+|---|---|
+| Consumer Rights Act 2015 | FTC Act Section 5 |
+| Late Payment of Commercial Debts Act 1998 | State small claims (all 50 states + DC) |
+| GDPR / Data Protection Act 2018 | State Attorney General complaints |
+| Employment Rights Act 1996 | FLSA |
+| MCOL (Money Claim Online) | BBB / FTC complaint filing |
 
-1. Go to [stripe.com](https://stripe.com) → Dashboard
-2. **Products** → Add product → "GroundLevel Pro" → £9/month recurring
-3. Copy the **Price ID** (starts with `price_`)
-4. **Developers → API Keys** → copy publishable + secret keys
-5. **Developers → Webhooks** → Add endpoint:
-   - URL: `https://your-replit-url.replit.app/api/webhook`
-   - Events: `checkout.session.completed`, `customer.subscription.deleted`, `customer.subscription.updated`
-   - Copy webhook signing secret
+Built-in database covers DataAnnotation, Upwork, Fiverr, Freelancer, and Toptal with platform-specific procedures.
 
-### 4. Set environment variables in Replit
+## Plug in any LLM
 
-Go to **Secrets** (lock icon) and add:
+Works fully offline with built-in templates. Add any LLM API key to power up with AI-enhanced analysis:
 
-```
-NEXT_PUBLIC_SUPABASE_URL=https://xxxxx.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJxxx...
-SUPABASE_SERVICE_ROLE_KEY=eyJxxx...
-ANTHROPIC_API_KEY=sk-ant-xxx...
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_xxx...
-STRIPE_SECRET_KEY=sk_live_xxx...
-STRIPE_WEBHOOK_SECRET=whsec_xxx...
-STRIPE_PRO_PRICE_ID=price_xxx...
-NEXT_PUBLIC_APP_URL=https://your-replit-url.replit.app
-```
+| Provider | Type |
+|---|---|
+| OpenAI (GPT-4o) | OpenAI-compatible |
+| DeepSeek | OpenAI-compatible |
+| Groq (Llama 3.3) | OpenAI-compatible |
+| Together AI | OpenAI-compatible |
+| Mistral | OpenAI-compatible |
+| OpenRouter (any model) | OpenAI-compatible |
+| Ollama (local) | OpenAI-compatible |
+| LM Studio (local) | OpenAI-compatible |
+| Google Gemini | Native API |
+| Anthropic Claude | Native API |
+| Custom endpoint | Any URL |
 
-### 5. Install and run
+Settings > LLM Provider > pick one > paste key > Test Connection > Save.
 
-```bash
-npm install
-npm run dev
-```
+## Architecture
 
----
+Single HTML file. No build step. No dependencies. No framework.
 
-## Deploy on Vercel (faster)
+- **L1 FACE** — 6 screens: landing, describe, analysis, dashboard, tracking, resolution
+- **L2 SWARM** — 9 agents: case analyst, document drafter, timeline manager, legal researcher, rights explainer, evidence collector, template optimiser, escalation engine, orchestrator
+- **L3 CASCADE** — tiered inference: T0 offline (built-in legal DB) → T3 API (any provider)
+- **L4 BLOOM** — 7-ring intent router (R0 ground → R6 watcher)
+- **L5 PERSIST** — IndexedDB storage, all data on-device
+- **L6 SKIN** — calming blue/white/green palette, mobile-first responsive, dark mode
+- **L7 ASS** — application state + lifecycle management
 
-```bash
-# Install Vercel CLI
-npm i -g vercel
+## Quick start
 
-# In project folder
-vercel
+1. Download `GroundLevel-v2.html`
+2. Open it in Chrome (or any modern browser)
+3. Click "Describe what happened"
+4. Type what happened in plain English
+5. Click "Analyse My Case"
+6. Review your case strength, rights, and legal position
+7. Click "Build My Action Plan"
+8. Copy/download your documents and start sending them
 
-# Add environment variables in Vercel dashboard
-# Settings → Environment Variables
-```
+## Optional: power up with AI
 
----
+1. Open Settings (gear icon)
+2. Pick a provider (e.g. Groq for free fast inference)
+3. Paste your API key
+4. Click "Test Connection"
+5. Save — your next analysis will be AI-enhanced
 
-## Project Structure
+## Legal notice
 
-```
-groundlevel/
-├── pages/
-│   ├── index.js          # Landing page
-│   ├── app.js            # Main app (4-tab interface)
-│   ├── auth.js           # Sign in / Sign up
-│   ├── _app.js           # Auth wrapper
-│   └── api/
-│       ├── analyse.js    # AI legal analysis (Claude)
-│       ├── complaint.js  # Complaint letter generation
-│       ├── checkout.js   # Stripe checkout
-│       ├── webhook.js    # Stripe webhook handler
-│       ├── profile.js    # User profile + encounters
-│       ├── patterns.js   # Badge number pattern data
-│       └── save-encounter.js
-├── lib/
-│   ├── supabase.js       # Supabase client
-│   └── uklaw.js          # UK law database
-├── styles/
-│   └── globals.css
-├── supabase_schema.sql   # Database schema
-└── .env.example          # Environment variables template
-```
+GroundLevel is a legal **information** tool, not legal advice. Always consult a solicitor (UK) or attorney (US) for advice specific to your situation. Verify all information against primary sources.
+
+## License
+
+MIT — do whatever you want with it.
 
 ---
 
-## Features
-
-### Free Tier
-- ⏺ Record encounters (timestamp, badge number, location)
-- 📖 Know your rights for any encounter type
-- ⚡ Bluff detector (10+ common bluffs pre-loaded)
-- 🔍 5 AI analyses per month
-
-### Pro Tier (£9/month)
-- Everything in free
-- Unlimited AI analyses
-- Complaint letter generation (IOPC, SIA, LGO)
-- Pattern database access
-- Full encounter history
-
----
-
-## Legal Notice
-
-GroundLevel provides general information about UK law for educational purposes. It is not legal advice. Always consult a qualified solicitor for specific legal matters.
-
----
-
-## Monetisation
-
-- **B2C**: £9/month Pro subscriptions
-- **B2B**: Civil liberties orgs, law firms (anonymised pattern data API)
-- **Affiliate**: Legal aid referrals
-
----
-
-Built by GroundLevel · Not legal advice · Know your rights
-
+Built by [AI Native Solutions](https://github.com/sjgant80-hub) · v18 protocol · sovereign
