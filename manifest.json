@@ -1,0 +1,26 @@
+{
+  "name": "GroundLevel · sovereign legal toolkit",
+  "short_name": "GroundLevel",
+  "description": "12 legal modules · 50+ templates · works offline · your case stays on your device · for the people not the few",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0a0f",
+  "theme_color": "#0a0a0f",
+  "categories": ["productivity", "utilities", "legal"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%230a0a0f' rx='32'/><text x='96' y='128' font-family='Times New Roman, serif' font-size='120' font-weight='700' text-anchor='middle' fill='%232563eb'>◊</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%230a0a0f' rx='80'/><text x='256' y='340' font-family='Times New Roman, serif' font-size='320' font-weight='700' text-anchor='middle' fill='%232563eb'>◊</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

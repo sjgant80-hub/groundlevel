@@ -1,98 +1,174 @@
-# GROUNDLEVEL v2
+# ◊·κ=φ⁴ · GroundLevel
 
-**Free AI legal agent for freelancers. One HTML file. Works offline. Your data never leaves your device.**
+**Sovereign legal toolkit. For the people not the few.**
 
-Been stiffed by a platform? GroundLevel identifies your rights, drafts every document, and tells you exactly where to file.
+> The law exists to protect everyone.
+> Lawyers exist to charge for access to the law.
+> The law is public. The templates are simple.
+> The jargon is the paywall.
+> GroundLevel removes the paywall.
 
-## Download
-
-**[Download GroundLevel-v2.html](https://sjgant80-hub.github.io/groundlevel/)** — save it anywhere, open in Chrome. That's it.
-
-No install. No account. No server. One file.
-
-## What it does
-
-You describe what happened in plain English. GroundLevel's 9-agent system parses your situation and generates:
-
-- **Legal analysis** — which laws protect you, how strong your case is (0-95 score)
-- **Ready-to-send documents** — Letter Before Action (UK), Demand Letter (US), GDPR Subject Access Request, BBB Complaint, FTC Complaint
-- **Evidence checklist** — exactly what to gather
-- **Escalation timeline** — day-by-day action plan with deadlines
-- **Tracking** — mark steps done, add notes, export your case
-
-## Dual jurisdiction
-
-Works for **UK** and **US** freelancers:
-
-| UK | US |
-|---|---|
-| Consumer Rights Act 2015 | FTC Act Section 5 |
-| Late Payment of Commercial Debts Act 1998 | State small claims (all 50 states + DC) |
-| GDPR / Data Protection Act 2018 | State Attorney General complaints |
-| Employment Rights Act 1996 | FLSA |
-| MCOL (Money Claim Online) | BBB / FTC complaint filing |
-
-Built-in database covers DataAnnotation, Upwork, Fiverr, Freelancer, and Toptal with platform-specific procedures.
-
-## Plug in any LLM
-
-Works fully offline with built-in templates. Add any LLM API key to power up with AI-enhanced analysis:
-
-| Provider | Type |
-|---|---|
-| OpenAI (GPT-4o) | OpenAI-compatible |
-| DeepSeek | OpenAI-compatible |
-| Groq (Llama 3.3) | OpenAI-compatible |
-| Together AI | OpenAI-compatible |
-| Mistral | OpenAI-compatible |
-| OpenRouter (any model) | OpenAI-compatible |
-| Ollama (local) | OpenAI-compatible |
-| LM Studio (local) | OpenAI-compatible |
-| Google Gemini | Native API |
-| Anthropic Claude | Native API |
-| Custom endpoint | Any URL |
-
-Settings > LLM Provider > pick one > paste key > Test Connection > Save.
-
-## Architecture
-
-Single HTML file. No build step. No dependencies. No framework.
-
-- **L1 FACE** — 6 screens: landing, describe, analysis, dashboard, tracking, resolution
-- **L2 SWARM** — 9 agents: case analyst, document drafter, timeline manager, legal researcher, rights explainer, evidence collector, template optimiser, escalation engine, orchestrator
-- **L3 CASCADE** — tiered inference: T0 offline (built-in legal DB) → T3 API (any provider)
-- **L4 BLOOM** — 7-ring intent router (R0 ground → R6 watcher)
-- **L5 PERSIST** — IndexedDB storage, all data on-device
-- **L6 SKIN** — calming blue/white/green palette, mobile-first responsive, dark mode
-- **L7 ASS** — application state + lifecycle management
-
-## Quick start
-
-1. Download `GroundLevel-v2.html`
-2. Open it in Chrome (or any modern browser)
-3. Click "Describe what happened"
-4. Type what happened in plain English
-5. Click "Analyse My Case"
-6. Review your case strength, rights, and legal position
-7. Click "Build My Action Plan"
-8. Copy/download your documents and start sending them
-
-## Optional: power up with AI
-
-1. Open Settings (gear icon)
-2. Pick a provider (e.g. Groq for free fast inference)
-3. Paste your API key
-4. Click "Test Connection"
-5. Save — your next analysis will be AI-enhanced
-
-## Legal notice
-
-GroundLevel is a legal **information** tool, not legal advice. Always consult a solicitor (UK) or attorney (US) for advice specific to your situation. Verify all information against primary sources.
-
-## License
-
-MIT — do whatever you want with it.
+One HTML file. 12 legal modules. 50+ templates. Works offline. Your case stays on your device.
 
 ---
 
-Built by [AI Native Solutions](https://github.com/sjgant80-hub) · v18 protocol · sovereign
+## What this is
+
+A single HTML file that walks you through the legal process to fight back against:
+
+- platforms that won't pay you (DataAnnotation, Upwork, Amazon MTurk, etc.)
+- payment processors holding your money (PayPal, Stripe, Wise freezes)
+- employers in dispute (unfair dismissal, unpaid wages, grievance)
+- landlords (deposit, disrepair, illegal eviction, Section 21 challenges)
+- retailers (faulty goods, subscription traps, unfair terms)
+- companies holding your data (GDPR · Subject Access · erasure)
+- anyone who owes you money (small claims · LBA → MCO → enforcement)
+- cross-border platform issues
+- regulators (one-click complaint factory · UK / US / EU)
+- subscription traps
+- the situations where private remedies have all failed
+
+For each: a step-by-step flow. Auto-filled templates. The actual law cited. Plain English explanation of what every term means and what it does.
+
+---
+
+## How to use it
+
+### Online
+Open: **[https://sjgant80-hub.github.io/groundlevel](https://sjgant80-hub.github.io/groundlevel)**
+
+Bookmark it. Install as PWA (the browser will offer you "install app"). Use offline forever.
+
+### Offline / sovereign
+Right-click → Save Page As → save `index.html` anywhere.
+
+Open the saved file in any modern browser. Works from `file://`. No internet required. Your case data is in the browser's IndexedDB on the device you saved it on.
+
+---
+
+## What it does NOT do
+
+- ❌ Not legal advice. Legal **information** and **templates**.
+- ❌ Does not file court papers for you. It tells you exactly how and where.
+- ❌ Does not represent you in court (no AI lawyer · use a real one if needed).
+- ❌ Does not promise outcomes. The outcome depends on your facts.
+- ❌ Does not replace a solicitor for complex cases. Use it as the £500 first consultation, free.
+
+---
+
+## The 12 modules
+
+| Module | Triggers | Cost | Lawyer-equivalent cost |
+|---|---|---|---|
+| Unpaid work | Platform / client owes you · won't pay | £35–80 court fee | £2,000–5,000 |
+| Frozen account | PayPal / Stripe / Wise froze your funds | £0 (Ombudsman free) | £1,500–4,000 |
+| Employment dispute | Dismissal · unpaid wages · grievance | £0 (tribunal is free) | £5,000–15,000 |
+| Landlord dispute | Deposit · disrepair · illegal eviction | £0–100 | £1,500–5,000 |
+| Consumer rights | Faulty goods · subscription trap | £0 | £500–2,000 |
+| Data access (GDPR) | Want your data · delete your data | £0 | £500–2,000 |
+| Small claims | Anyone owes you money | £35–455 court fee | £2,000–5,000 |
+| International freelancer | Cross-border tax · platform blocking | £0 | £500–2,000 |
+| Regulator complaint | One-click factory · UK + US + EU | £0 | £200–500 per body |
+| Subscription trap | Auto-renewed without consent | £0 | £500–1,500 |
+| Cross-border dispute | You here · platform there | £0 | £2,000–10,000 |
+| Public accountability | When everything else failed | £0 | n/a |
+
+---
+
+## What is sovereign about this
+
+- **No server.** GroundLevel does not have a backend. There is nothing to hack, subpoena, or shut down.
+- **No account.** No sign-up. No email verification. No password.
+- **No tracking.** No analytics, no telemetry, no cookies for anything except your case storage.
+- **Your data on your device.** Every case file, evidence item, deadline, and note lives in your browser's IndexedDB. If you close the tab, everything persists. If you clear browser data, everything is gone.
+- **Open source.** [MIT licence](./LICENSE). The code is on GitHub. Fork it. Modify it. Self-host it. If we vanish tomorrow, the tool keeps running.
+- **Article 12 audit chain.** Every evidence item is SHA-256 hashed and chained to the previous item. Tamper-evident. Court-admissible chain of custody (the same standard used in digital forensics).
+
+---
+
+## The asymmetry reversal
+
+**Before**: corporation has lawyers (£500/hr), you don't → they win.
+**After**: you have GroundLevel (£0), they have lawyers (£500/hr) → level playing field.
+
+Every hour of dispute drains them and costs you nothing.
+
+Time is on your side. They want to settle. You just need the right letter.
+
+---
+
+## Pricing
+
+**The tool is free. Always. Non-negotiable.**
+
+Access to justice should never have a paywall. That's the whole point.
+
+If you want bespoke help on an unusual case:
+
+- **Case review** — £50 — I review your case file and suggest strategy
+- **Custom letter drafting** — £100 — for situations no template covers
+- **Consultation** — £200/hr — for complex multi-step cases
+
+But the tool itself is always free. Open source. MIT.
+
+---
+
+## Jurisdiction coverage
+
+**Primary**: England & Wales · UK GDPR · ACAS · CPR · MCOL.
+**Secondary**: United States · state small claims · FTC · CFPB · BBB.
+**Tertiary**: EU consumer protection · cross-border routing.
+
+If you are in Scotland or Northern Ireland, most templates work with minor adjustment (Sheriff Court vs County Court etc.). The substantive rights are largely the same; the procedural names differ.
+
+---
+
+## v3 — what changed from v2
+
+v2 was a single-jurisdiction freelancer-stiffed tool (5 templates, 1 flow). v3 is the full sovereign legal toolkit per the seed:
+
+- 12 modules (up from 1)
+- 50+ templates (up from 5)
+- Evidence vault with SHA-256 prevHash chain
+- Deadline tracker (auto-populated from letters sent)
+- Regulator complaint factory (UK + US + EU)
+- Mobile-first dark mode, justice-blue palette
+- PWA installable, fully offline via service worker
+- Article 12 audit shim baked in
+- v2 preserved in `archive/` for reference
+
+---
+
+## How to contribute
+
+If you've used the tool and a template needs updating (the law moved, the URL changed), open a PR or an issue.
+
+If you're a solicitor reading this and you spot a serious problem — please open an issue. The tool is for people who can't afford you. It is in the interest of access to justice that it is accurate.
+
+---
+
+## Credits
+
+Built by Simon Gant as part of the Fall* sovereign estate.
+
+- **Audit chain shim**: [fall-euaiact](https://github.com/sjgant80-hub/fall-euaiact) — EU AI Act Article 12 compliance baked in
+- **Prime number**: 613 (the next prime after fall-euaiact's 607)
+- **Constant**: κ = φ⁴ (the golden ratio to the fourth · because legal process is recursive)
+
+---
+
+## Licence
+
+MIT. Use freely. Fork freely.
+
+---
+
+> the law is public · the templates are simple · the jargon is the paywall
+> remove the paywall · level the ground · fight back
+> one HTML file · works offline · your case stays on your device
+> £0 vs £5,000 · same outcome · different access
+> their lawyers cost them money · yours costs nothing
+> every hour of dispute drains them not you
+> time is on your side · you just need the right letter
+
+**◊·κ=φ⁴**
