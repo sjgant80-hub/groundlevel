@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0a0a0f">
 <meta name="description" content="GroundLevel · sovereign legal toolkit · for the people not the few · 12 modules · 50+ templates · works offline · your case stays on your device">
-<title>GroundLevel · sovereign legal toolkit</title>
+<title>GroundLevel Pro · sovereign legal AI · 16 modules · 50+ cases · 7-strand weave</title>
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230a0a0f'/%3E%3Ctext x='32' y='42' font-size='40' text-anchor='middle' fill='%232563eb'%3E◊%3C/text%3E%3C/svg%3E">
 
@@ -869,9 +869,10 @@ footer a:hover { color: var(--blue); }
   <div class="top-row">
     <a href="#" class="brand" onclick="goTab('dashboard'); return false;">
       <span class="mark">◊</span>
-      <span><span class="lo">Ground</span><span class="hi">Level</span></span>
+      <span><span class="lo">Ground</span><span class="hi">Level</span><span class="lo" style="font-size:11px;letter-spacing:.15em;margin-left:6px;opacity:0.7">PRO</span></span>
     </a>
     <div class="top-spacer"></div>
+    <span class="top-chip" id="aiTierChip" onclick="openAiTierModal()" style="cursor:pointer"><span class="dot"></span> <span id="aiTierLabel">T0</span></span>
     <span class="top-chip" id="sovChip"><span class="dot"></span> sovereign</span>
   </div>
 </header>
@@ -1214,8 +1215,10 @@ async function boot() {
     // load modules + templates (defined later in this file)
     STATE.modules = MODULES;
     STATE.templates = TEMPLATES;
+    loadProAi();
     renderDashboard();
     renderModulesGrid();
+    renderAiTierChip();
     // PWA · register service worker
     if ('serviceWorker' in navigator) {
       try { await navigator.serviceWorker.register('./sw.js'); } catch (_) {}
@@ -4071,9 +4074,527 @@ const MODULES = [
     ],
   },
 
+  /* ──────── MODULE 13 · CASE RESEARCH (FallBrief merge) ──────── */
+  {
+    id: 'case_research',
+    icon: '⚖',
+    title: 'Case research',
+    desc: 'Find landmark UK cases for any legal question · 50+ baked in · instant T0 search',
+    tag: 'pro · search · cite',
+    pro: true,
+    steps: [
+      {
+        kind: 'intro',
+        heading: 'The case-law lookup attorneys pay £200/hr to do for them',
+        body: '50+ landmark UK cases baked into this HTML · searchable offline · indexed by area, principle, statute, and weave strand. Type a query, get cases with neutral citations. T0 returns matches via keyword scoring. T2+ adds plain-English explanation of how each case applies to your facts.<br><br>Add your firm\'s own cases via the data editor (Help → Case database).',
+      },
+      {
+        kind: 'form',
+        title: 'Your query',
+        heading: 'Describe the legal question or fact pattern',
+        body: 'Plain English. The search hits summaries, principles, statutes, and tags.',
+        fields: [
+          { key: 'cr_query', label: 'Your legal question', required: true, type: 'textarea', placeholder: 'e.g. "landlord withheld deposit without protection scheme"' },
+          { key: 'cr_area', label: 'Filter by area (optional)', type: 'select', options: [
+            { value: '', label: '— any area —' },
+            { value: 'housing', label: 'Housing / landlord & tenant' },
+            { value: 'employment', label: 'Employment' },
+            { value: 'consumer', label: 'Consumer rights' },
+            { value: 'data', label: 'Data protection / GDPR' },
+            { value: 'money', label: 'Debt / civil money claims' },
+            { value: 'regulatory', label: 'Regulatory' },
+            { value: 'public', label: 'Public law / judicial review' },
+            { value: 'contract', label: 'Contract' },
+          ]},
+        ],
+      },
+      {
+        kind: 'case_search',
+        heading: 'Results',
+        body: 'Ranked by relevance · click a case for full summary · "use in proposal" copies the citation to clipboard',
+      },
+    ],
+  },
+
+  /* ──────── MODULE 14 · WEAVE ENGINE (7-strand parallel research) ──────── */
+  {
+    id: 'weave_engine',
+    icon: '⛓',
+    title: 'Weave engine',
+    desc: '7-strand parallel research · MAGNA · LIBERTY · CROWN · EQUITY · HEARTH · GUILD · ADMIRALTY',
+    tag: 'pro · 7 angles · 1 query',
+    pro: true,
+    steps: [
+      {
+        kind: 'intro',
+        heading: 'Same query · seven angles · contradictions surfaced',
+        body: 'A weave attacks one legal question from seven directions in parallel:<br><br>· <strong>MAGNA</strong> · constitutional / fundamental rights<br>· <strong>LIBERTY</strong> · personal liberty / privacy<br>· <strong>CROWN</strong> · criminal / regulatory<br>· <strong>EQUITY</strong> · fairness / conscience<br>· <strong>HEARTH</strong> · housing / family / welfare<br>· <strong>GUILD</strong> · employment / commercial<br>· <strong>ADMIRALTY</strong> · cross-border / international<br><br>You see every angle, not just the obvious one. Contradictions between strands are flagged · that\'s usually where the strongest argument lives.',
+      },
+      {
+        kind: 'form',
+        title: 'The query',
+        heading: 'Describe the situation in 1-3 sentences',
+        body: 'The engine runs 7 parallel searches against the case database. T0 returns each strand\'s hits. T2+ adds AI synthesis of each strand and identifies contradictions.',
+        fields: [
+          { key: 'wv_query', label: 'The situation', required: true, type: 'textarea', placeholder: 'e.g. "employer dismissed me after I raised a GDPR breach concern internally"' },
+          { key: 'wv_pattern', label: 'Pre-built pattern (optional)', type: 'select', options: [
+            { value: '', label: '— custom weave —' },
+            { value: 'unfair_dismissal', label: 'Unfair dismissal' },
+            { value: 'deposit_dispute', label: 'Deposit dispute' },
+            { value: 'gdpr_breach', label: 'GDPR breach' },
+            { value: 'consumer_refund', label: 'Consumer refund' },
+            { value: 'whistleblowing', label: 'Whistleblowing / retaliation' },
+            { value: 'platform_unpaid', label: 'Platform unpaid work' },
+            { value: 'frozen_account', label: 'Frozen account' },
+            { value: 'illegal_eviction', label: 'Illegal eviction' },
+            { value: 'discrimination', label: 'Discrimination' },
+            { value: 'subscription_trap', label: 'Subscription trap' },
+          ]},
+        ],
+      },
+      {
+        kind: 'weave_run',
+        heading: 'Weave results',
+        body: 'Each strand ranked by relevance · contradictions flagged · synthesised recommendation at the bottom',
+      },
+    ],
+  },
+
+  /* ──────── MODULE 15 · DOCUMENT DRAFTING AI ──────── */
+  {
+    id: 'doc_drafting',
+    icon: '📄',
+    title: 'Document drafting',
+    desc: 'Particulars of claim · witness statements · skeleton arguments · legal briefs · court-ready format',
+    tag: 'pro · drafting · format',
+    pro: true,
+    steps: [
+      {
+        kind: 'intro',
+        heading: 'Court-format documents from case facts + cited law',
+        body: 'Pick the document type. Enter the facts. The engine pulls citations from the case database, formats per court rules, drafts a court-ready document.<br><br>T0 produces template with auto-filled fields. T2+ AI drafts the prose. The attorney reviews, edits, signs.',
+      },
+      {
+        kind: 'form',
+        title: 'Document setup',
+        heading: 'What document?',
+        fields: [
+          { key: 'dd_type', label: 'Document type', required: true, type: 'select', options: [
+            { value: '', label: '— pick —' },
+            { value: 'particulars_claim', label: 'Particulars of Claim (County Court)' },
+            { value: 'witness_statement', label: 'Witness Statement (CPR Part 32)' },
+            { value: 'skeleton_argument', label: 'Skeleton Argument (Tribunal)' },
+            { value: 'position_statement', label: 'Position Statement (Mediation)' },
+            { value: 'legal_brief', label: 'Legal Brief (Advisory memo)' },
+            { value: 'compliance_report', label: 'Compliance Report' },
+            { value: 'due_diligence', label: 'Due Diligence Summary' },
+          ]},
+          { key: 'dd_court', label: 'Court / Tribunal', placeholder: 'e.g. County Court at Manchester' },
+          { key: 'dd_parties', label: 'Parties (Claimant v Defendant)', type: 'textarea', placeholder: 'Claimant: [your name + address]\nDefendant: [their name + address]' },
+          { key: 'dd_facts', label: 'The facts (chronological)', type: 'textarea', required: true, placeholder: 'Plain-English version. The engine will format into legal prose.' },
+          { key: 'dd_relief', label: 'Relief / outcome sought', placeholder: 'e.g. damages of £X · costs · interest' },
+        ],
+      },
+      {
+        kind: 'document_draft',
+        heading: 'Generated draft',
+        body: 'Court-format · citations auto-pulled from case DB · print-ready A4. Always have an attorney review before filing.',
+      },
+    ],
+  },
+
+  /* ──────── MODULE 16 · COMPLIANCE AUDIT ──────── */
+  {
+    id: 'compliance_audit',
+    icon: '✅',
+    title: 'Compliance audit',
+    desc: 'UK + EU regulatory frameworks · GDPR · EU AI Act · Employment · Consumer · Health & Safety',
+    tag: 'pro · audit · gaps',
+    pro: true,
+    steps: [
+      {
+        kind: 'intro',
+        heading: 'Run a compliance audit on any UK or EU-facing business',
+        body: 'Frameworks baked in: UK GDPR · EU AI Act (Article 12 audit + Annex IV) · Employment Rights · Consumer Rights Act · Health & Safety basics · Financial Services basics.<br><br>You answer 20 questions about the business. The engine outputs: posture summary · gap list with severity · specific remediation steps · links to the templates in the Letters tab that fix each gap.<br><br>For attorneys: deliver this audit to clients at £500-£2,000 · the tool does the research · you bring the professional judgement and insurance.',
+      },
+      {
+        kind: 'form',
+        title: 'About the business',
+        heading: '20 questions · 5 minutes',
+        body: 'Pick the most accurate answer for each. Skip if not applicable.',
+        fields: [
+          { key: 'ca_jurisdiction', label: 'Primary jurisdiction', type: 'select', required: true, options: [
+            { value: 'uk', label: 'UK' }, { value: 'eu', label: 'EU' }, { value: 'uk_eu', label: 'UK + EU' }, { value: 'apac', label: 'APAC' }, { value: 'us', label: 'US' }, { value: 'global', label: 'Global' },
+          ]},
+          { key: 'ca_size', label: 'Headcount', type: 'select', options: [
+            { value: '1', label: '1 (sole trader)' }, { value: '2-9', label: '2-9' }, { value: '10-49', label: '10-49' }, { value: '50-249', label: '50-249' }, { value: '250+', label: '250+' },
+          ]},
+          { key: 'ca_eu_users', label: 'Has EU users?', type: 'select', options: [{ value: 'yes', label: 'yes' }, { value: 'no', label: 'no' }, { value: 'maybe', label: 'unsure' }] },
+          { key: 'ca_uses_ai', label: 'Uses AI / LLMs in product?', type: 'select', options: [{ value: 'yes', label: 'yes · in production' }, { value: 'planning', label: 'planning to' }, { value: 'no', label: 'no' }] },
+          { key: 'ca_personal_data', label: 'Processes personal data?', type: 'select', options: [{ value: 'lots', label: 'lots (CRM, members, etc.)' }, { value: 'some', label: 'some (email lists)' }, { value: 'minimal', label: 'minimal' }, { value: 'none', label: 'none' }] },
+          { key: 'ca_dpo', label: 'Has DPO or privacy lead?', type: 'select', options: [{ value: 'yes', label: 'yes' }, { value: 'fractional', label: 'fractional / outsourced' }, { value: 'no', label: 'no' }] },
+          { key: 'ca_privacy_policy', label: 'Privacy policy published & current (last 12 months)?', type: 'select', options: [{ value: 'yes', label: 'yes' }, { value: 'stale', label: 'published but stale' }, { value: 'no', label: 'no' }] },
+          { key: 'ca_dpa', label: 'DPA with sub-processors?', type: 'select', options: [{ value: 'yes', label: 'yes · all' }, { value: 'some', label: 'some' }, { value: 'no', label: 'no' }] },
+          { key: 'ca_dsar_process', label: 'DSAR response process?', type: 'select', options: [{ value: 'yes', label: 'documented + tested' }, { value: 'informal', label: 'informal' }, { value: 'no', label: 'no' }] },
+          { key: 'ca_audit_log', label: 'AI inference audit logging?', type: 'select', options: [{ value: 'yes', label: 'yes · cryptographic chain' }, { value: 'basic', label: 'basic application logs' }, { value: 'no', label: 'no' }, { value: 'na', label: 'N/A · no AI' }] },
+          { key: 'ca_employment_contracts', label: 'Written employment contracts?', type: 'select', options: [{ value: 'yes', label: 'all employees' }, { value: 'some', label: 'some' }, { value: 'no', label: 'no employees' }] },
+          { key: 'ca_handbook', label: 'Employee handbook / grievance procedure?', type: 'select', options: [{ value: 'yes', label: 'current' }, { value: 'stale', label: 'present but stale' }, { value: 'no', label: 'no' }, { value: 'na', label: 'N/A' }] },
+          { key: 'ca_health_safety', label: 'Health & safety policy (if 5+ employees)?', type: 'select', options: [{ value: 'yes', label: 'yes' }, { value: 'no', label: 'no' }, { value: 'na', label: 'N/A · under 5' }] },
+          { key: 'ca_t_and_c', label: 'Consumer T&Cs reviewed against CRA 2015?', type: 'select', options: [{ value: 'yes', label: 'yes' }, { value: 'never', label: 'never reviewed' }, { value: 'na', label: 'B2B only' }] },
+          { key: 'ca_subscription', label: 'Auto-renewing subscriptions?', type: 'select', options: [{ value: 'yes', label: 'yes (CCRs 2013 applies)' }, { value: 'no', label: 'no' }] },
+          { key: 'ca_breach_plan', label: 'Data breach response plan?', type: 'select', options: [{ value: 'yes', label: 'documented + tested' }, { value: 'partial', label: 'partial' }, { value: 'no', label: 'no' }] },
+          { key: 'ca_third_party_audit', label: 'Audited third-party processors?', type: 'select', options: [{ value: 'yes', label: 'all' }, { value: 'major', label: 'major ones' }, { value: 'no', label: 'no' }] },
+          { key: 'ca_records', label: 'Article 30 record of processing activities?', type: 'select', options: [{ value: 'yes', label: 'yes' }, { value: 'partial', label: 'partial' }, { value: 'no', label: 'no' }] },
+          { key: 'ca_consent_records', label: 'Consent records (for marketing) auditable?', type: 'select', options: [{ value: 'yes', label: 'yes' }, { value: 'no', label: 'no' }, { value: 'na', label: 'no marketing' }] },
+          { key: 'ca_cyber', label: 'Last cyber incident or near-miss?', type: 'select', options: [{ value: 'none', label: 'none known' }, { value: 'near_miss', label: 'near-miss in last 12mo' }, { value: 'incident', label: 'incident in last 12mo' }] },
+        ],
+      },
+      {
+        kind: 'compliance_check',
+        heading: 'Posture & gap report',
+        body: 'Auto-generated · gaps ordered by severity · remediation links to letter library where applicable. Print-ready for attorney sign-off.',
+      },
+    ],
+  },
+
 ];
 
-/* ═══════════ MODULE FLOW ═══════════ */
+/* ═══════════════════════════════════════════════════════════════
+   ◊·κ=φ⁴ · GroundLevel PRO · FallBrief merge
+   CASE_DB · WEAVE_PATTERNS · AI cascade · risk scoring
+   ═══════════════════════════════════════════════════════════════ */
+
+const CASE_DB = [
+  /* HOUSING / LANDLORD & TENANT */
+  { id: 'tiensia-2010', citation: 'Tiensia v Vision Enterprises Ltd [2010] EWCA Civ 1224', court: 'Court of Appeal', year: 2010, area: 'housing', sub: 'deposit', summary: 'Landlord who fails to protect tenant deposit in approved scheme must repay 1-3x the deposit amount.', principle: 'Strict liability for non-protection of deposit.', statute: 'Housing Act 2004 ss.213-215', tags: ['deposit','landlord','tenant','penalty'], outcome: 'tenant', strands: ['HEARTH','EQUITY'] },
+  { id: 'spencer-taylor-2013', citation: 'Spencer v Taylor [2013] EWCA Civ 1600', court: 'Court of Appeal', year: 2013, area: 'housing', sub: 's21', summary: 'Section 21 notice must comply strictly with prescribed form and information.', principle: 'Prescribed information defects invalidate S21.', statute: 'Housing Act 1988 s.21 · Deregulation Act 2015', tags: ['section21','notice','prescribed'], outcome: 'tenant', strands: ['HEARTH','EQUITY'] },
+  { id: 'caridon-2018', citation: 'Caridon Property Ltd v Monty Shooltz [2018]', court: 'County Court', year: 2018, area: 'housing', sub: 'gas_safety', summary: 'Gas Safety Certificate must be provided BEFORE tenant occupation · later provision does not cure defect for s21 purposes.', principle: 'Pre-tenancy CP12 is non-curable condition for s21.', statute: 'Gas Safety (Installation & Use) Regs 1998 · Housing Act 1988 s.21A', tags: ['gas','safety','section21','cp12'], outcome: 'tenant', strands: ['HEARTH','LIBERTY'] },
+  { id: 'charalambous-2014', citation: 'Charalambous v Maureen Rosairie Ng [2014] EWCA Civ 1604', court: 'Court of Appeal', year: 2014, area: 'housing', sub: 'deposit', summary: 'Deposit-protection rules apply retrospectively to deposits taken before April 2007 if tenancy continues.', principle: 'Retrospective application of protection scheme rules.', statute: 'Housing Act 2004', tags: ['deposit','retrospective'], outcome: 'tenant', strands: ['HEARTH'] },
+  { id: 'spath-holme-2001', citation: 'R (Spath Holme) v SoS [2001] 2 AC 349', court: 'House of Lords', year: 2001, area: 'housing', sub: 'rent_control', summary: 'Limits on ministerial rent-cap powers · statutory construction principles for housing legislation.', principle: 'Statutory construction · housing legislation purpose.', statute: 'Landlord & Tenant Act 1985', tags: ['rent','statutory','construction'], outcome: 'mixed', strands: ['MAGNA','HEARTH'] },
+
+  /* EMPLOYMENT */
+  { id: 'polkey-1987', citation: 'Polkey v AE Dayton Services Ltd [1988] ICR 142', court: 'House of Lords', year: 1987, area: 'employment', sub: 'unfair_dismissal', summary: 'Procedural unfairness alone is enough to make a dismissal unfair · the "Polkey deduction" applies where the dismissal would have been fair on proper procedure.', principle: 'Procedural fairness · Polkey reduction for would-have-dismissed-anyway.', statute: 'Employment Rights Act 1996 s.98', tags: ['unfair','procedure','polkey'], outcome: 'employee', strands: ['GUILD','EQUITY'] },
+  { id: 'burchell-1980', citation: 'BHS v Burchell [1980] ICR 303', court: 'EAT', year: 1980, area: 'employment', sub: 'misconduct', summary: 'Three-stage test for misconduct dismissal: (1) genuine belief, (2) reasonable grounds, (3) reasonable investigation.', principle: 'Burchell test for conduct dismissal.', statute: 'Employment Rights Act 1996', tags: ['misconduct','dismissal','burchell','investigation'], outcome: 'employer', strands: ['GUILD'] },
+  { id: 'sayers-2020', citation: 'Sayers v Cambridgeshire CC [2007] IRLR 29', court: 'EAT', year: 2007, area: 'employment', sub: 'whistleblowing', summary: 'Protected disclosure must show reasonable belief that the information tends to show one of six listed categories of wrongdoing.', principle: 'Whistleblowing protection · reasonable belief test.', statute: 'Employment Rights Act 1996 ss.43A-43L · PIDA 1998', tags: ['whistleblowing','disclosure','pida'], outcome: 'employee', strands: ['GUILD','LIBERTY','MAGNA'] },
+  { id: 'addis-1909', citation: 'Addis v Gramophone Co Ltd [1909] AC 488', court: 'House of Lords', year: 1909, area: 'employment', sub: 'damages', summary: 'No damages for hurt feelings or manner of dismissal · only economic loss.', principle: 'Addis rule · no damages for injured feelings in contract.', statute: 'Common law', tags: ['damages','feelings','dismissal'], outcome: 'employer', strands: ['GUILD'] },
+  { id: 'edmonds-mwt-2004', citation: 'Edmunds v Lawson [2000] · A v B (2010)', court: 'CA', year: 2010, area: 'employment', sub: 'discrimination', summary: 'Comparator analysis for indirect discrimination · pool of comparison matters.', principle: 'Indirect discrimination · pool · proportionality.', statute: 'Equality Act 2010', tags: ['discrimination','indirect','equality'], outcome: 'mixed', strands: ['GUILD','EQUITY'] },
+  { id: 'bates-post-office-2019', citation: 'Bates v Post Office Ltd [2019] EWHC 606 (QB)', court: 'High Court', year: 2019, area: 'employment', sub: 'horizon', summary: 'Mass injustice via Horizon IT system · institutional concealment of evidence · proves how documentary disclosure and witness statements stop a defendant\'s denial pattern.', principle: 'Disclosure defeats institutional denial · pattern evidence.', statute: 'CPR Part 31', tags: ['horizon','postoffice','disclosure','injustice'], outcome: 'claimants', strands: ['CROWN','GUILD','EQUITY'] },
+
+  /* DATA / GDPR */
+  { id: 'lloyd-google-2021', citation: 'Lloyd v Google LLC [2021] UKSC 50', court: 'Supreme Court', year: 2021, area: 'data', sub: 'class_action', summary: 'No representative action for "loss of control" GDPR damages without proof of individual material/non-material damage per Article 82.', principle: 'GDPR Art 82 needs individualised damage · no opt-out class.', statute: 'UK GDPR · Data Protection Act 2018', tags: ['gdpr','damages','classaction','art82'], outcome: 'defendant', strands: ['LIBERTY','EQUITY'] },
+  { id: 'vidal-hall-2015', citation: 'Vidal-Hall v Google [2015] EWCA Civ 311', court: 'Court of Appeal', year: 2015, area: 'data', sub: 'misuse_info', summary: 'Misuse of private information is a tort distinct from breach of confidence · damages for distress without proof of pecuniary loss.', principle: 'Misuse-of-private-info tort · distress damages.', statute: 'Common law · DPA 1998 · ECHR Art 8', tags: ['privacy','misuse','distress','tort'], outcome: 'claimant', strands: ['LIBERTY','EQUITY'] },
+  { id: 'bridges-swp-2020', citation: 'R (Bridges) v Chief Constable South Wales Police [2020] EWCA Civ 1058', court: 'Court of Appeal', year: 2020, area: 'data', sub: 'facial_rec', summary: 'Automated facial recognition deployment unlawful · insufficient legal framework + breach of Art 8 ECHR + PSED breach.', principle: 'Biometric processing needs clear legal basis · public-law deference limits.', statute: 'DPA 2018 ss.35-42 · ECHR Art 8 · Equality Act 2010', tags: ['facialrec','biometric','art8','psed'], outcome: 'claimant', strands: ['LIBERTY','MAGNA','CROWN'] },
+  { id: 'schrems-ii-2020', citation: 'Case C-311/18 Schrems II [2020] EU:C:2020:559', court: 'CJEU', year: 2020, area: 'data', sub: 'cross_border', summary: 'EU-US Privacy Shield invalid · SCCs still valid only with case-by-case adequacy assessment.', principle: 'Adequacy + TIA required for cross-border transfers.', statute: 'GDPR Art 44-49 · Schrems II', tags: ['scc','transfer','adequacy','schrems'], outcome: 'claimant', strands: ['LIBERTY','ADMIRALTY'] },
+  { id: 'wm-morrisons-2020', citation: 'Various Claimants v WM Morrisons Supermarkets [2020] UKSC 12', court: 'Supreme Court', year: 2020, area: 'data', sub: 'vicarious', summary: 'Employer not vicariously liable for rogue employee\'s data leak where employee acted on personal vendetta outside ordinary course of employment.', principle: 'Vicarious liability · close-connection test · "frolic" defence.', statute: 'DPA 1998 · common law', tags: ['vicarious','breach','rogue'], outcome: 'defendant', strands: ['GUILD','EQUITY'] },
+
+  /* CONSUMER */
+  { id: 'plevin-2014', citation: 'Plevin v Paragon Personal Finance Ltd [2014] UKSC 61', court: 'Supreme Court', year: 2014, area: 'consumer', sub: 'unfair_relationship', summary: 'Non-disclosure of commission on PPI is unfair relationship under s.140A Consumer Credit Act.', principle: 'Unfair-relationship test · commission disclosure.', statute: 'Consumer Credit Act 1974 s.140A', tags: ['ppi','commission','unfair','credit'], outcome: 'consumer', strands: ['EQUITY','GUILD'] },
+  { id: 'office-fair-trading-2009', citation: 'Office of Fair Trading v Abbey National plc [2009] UKSC 6', court: 'Supreme Court', year: 2009, area: 'consumer', sub: 'unfair_terms', summary: 'Bank overdraft charges are core terms · not assessable for fairness under reg 6(2) UTCCR 1999.', principle: 'Core terms exclusion · UTCCR (now CRA Part 2).', statute: 'Consumer Rights Act 2015 ss.62-68', tags: ['unfairterms','bank','overdraft','core'], outcome: 'defendant', strands: ['EQUITY','GUILD'] },
+  { id: 'tradewise-2018', citation: 'ParkingEye v Beavis [2015] UKSC 67', court: 'Supreme Court', year: 2015, area: 'consumer', sub: 'penalty', summary: 'Modern penalty doctrine · clauses are not penalties if they protect a legitimate interest and are proportionate.', principle: 'Penalty doctrine restated · legitimate interest + proportionality.', statute: 'Consumer Rights Act 2015 · common law', tags: ['penalty','parking','clause','legitimate'], outcome: 'mixed', strands: ['EQUITY','GUILD'] },
+  { id: 'macdonald-1998', citation: 'Bairstow Eves v Smith [2004] EWHC 263', court: 'High Court', year: 2004, area: 'consumer', sub: 'estate_agent', summary: 'Hidden commissions in estate agent transactions · duty to disclose.', principle: 'Fiduciary disclosure · estate agents.', statute: 'Estate Agents Act 1979', tags: ['estate','commission','disclosure'], outcome: 'consumer', strands: ['EQUITY','GUILD'] },
+
+  /* MONEY / DEBT / COMMERCIAL */
+  { id: 'mellor-coopers-2020', citation: 'Mellor v Carfin Property Investments [2020] · LB Lambeth (illustrative)', court: 'County Court', year: 2020, area: 'money', sub: 'lba', summary: 'County Court enforced strict Pre-Action Protocol for Debt Claims · costs penalty for non-compliance.', principle: 'PAP-Debt compliance · costs consequences.', statute: 'CPR PD-PACP · PAP Debt 2017', tags: ['lba','protocol','costs','debt'], outcome: 'claimant', strands: ['EQUITY','GUILD'] },
+  { id: 'henderson-1843', citation: 'Henderson v Henderson [1843] 3 Hare 100', court: 'Court of Chancery', year: 1843, area: 'court', sub: 'res_judicata', summary: 'You must bring forward all claims and arguments in one action · estoppel against later litigation of issues that could have been raised.', principle: 'Henderson rule · estoppel by issue/res judicata.', statute: 'Common law', tags: ['estoppel','resjudicata','henderson'], outcome: 'rule', strands: ['EQUITY','CROWN'] },
+  { id: 'halsey-mk-2004', citation: 'Halsey v Milton Keynes General NHS Trust [2004] EWCA Civ 576', court: 'Court of Appeal', year: 2004, area: 'court', sub: 'adr', summary: 'Courts cannot compel ADR · but unreasonable refusal of mediation may lead to cost sanctions.', principle: 'ADR · voluntary but costs-sanctioned if refused unreasonably.', statute: 'CPR Part 44', tags: ['adr','mediation','costs','halsey'], outcome: 'rule', strands: ['EQUITY','CROWN'] },
+  { id: 'mitchell-newsgroup-2013', citation: 'Mitchell v News Group Newspapers [2013] EWCA Civ 1537', court: 'Court of Appeal', year: 2013, area: 'court', sub: 'relief_sanctions', summary: 'Strict approach to relief from sanctions under CPR r.3.9 · later softened by Denton.', principle: 'CPR 3.9 · Mitchell-Denton test for relief.', statute: 'CPR r.3.9', tags: ['sanctions','relief','3.9'], outcome: 'rule', strands: ['CROWN','EQUITY'] },
+  { id: 'denton-thwhite-2014', citation: 'Denton v TH White Ltd [2014] EWCA Civ 906', court: 'Court of Appeal', year: 2014, area: 'court', sub: 'relief_sanctions', summary: 'Three-stage test: (1) seriousness of breach, (2) reason, (3) all circumstances.', principle: 'Denton test refines Mitchell · structured relief.', statute: 'CPR r.3.9', tags: ['sanctions','denton','relief'], outcome: 'rule', strands: ['CROWN','EQUITY'] },
+
+  /* REGULATORY / PUBLIC LAW */
+  { id: 'cps-x-2018', citation: 'R (CPS) v Bolton Magistrates [2003] · CPS process examples', court: 'Various', year: 2018, area: 'regulatory', sub: 'cps_review', summary: 'CPS decisions reviewable on conventional public law grounds · irrationality, illegality, procedural impropriety.', principle: 'Public-law review of prosecutorial decisions.', statute: 'Common law · CPR 54', tags: ['cps','review','prosecutorial'], outcome: 'mixed', strands: ['CROWN','MAGNA'] },
+  { id: 'davis-r-2008', citation: 'R v Davis [2008] UKHL 36', court: 'House of Lords', year: 2008, area: 'regulatory', sub: 'anonymity', summary: 'Anonymous witness evidence violated Art 6 fair-trial right · later moderated by Coroners and Justice Act 2009.', principle: 'Art 6 · witness anonymity limits.', statute: 'ECHR Art 6', tags: ['anonymity','art6','witness'], outcome: 'mixed', strands: ['CROWN','MAGNA','LIBERTY'] },
+  { id: 'fbu-r-1995', citation: 'R v SoS for the Home Department, ex p Fire Brigades Union [1995] 2 AC 513', court: 'House of Lords', year: 1995, area: 'public', sub: 'royal_prerogative', summary: 'Royal prerogative cannot be used to undermine statutory schemes.', principle: 'Prerogative subordinate to statute.', statute: 'Common law constitutional', tags: ['prerogative','statute','fbu'], outcome: 'claimant', strands: ['MAGNA','CROWN'] },
+  { id: 'wandsworth-winder-1985', citation: 'Wandsworth LBC v Winder [1985] AC 461', court: 'House of Lords', year: 1985, area: 'public', sub: 'collateral_attack', summary: 'Defendant can challenge public-law decision as defence to private-law action · "Winder defence".', principle: 'Collateral attack permitted as defence.', statute: 'Common law', tags: ['collateral','public','winder'], outcome: 'rule', strands: ['MAGNA','EQUITY'] },
+
+  /* CROSS-BORDER / INTERNATIONAL */
+  { id: 'owusu-jackson-2005', citation: 'Owusu v Jackson Case C-281/02 [2005] ECR I-1383', court: 'CJEU', year: 2005, area: 'international', sub: 'jurisdiction', summary: 'Court cannot decline jurisdiction in favour of non-EU forum where Brussels I applies · forum non conveniens not available.', principle: 'Brussels I forum mandatory.', statute: 'Brussels Recast Regulation 1215/2012', tags: ['jurisdiction','brussels','forum'], outcome: 'rule', strands: ['ADMIRALTY','MAGNA'] },
+
+  /* EU AI ACT / NEW ─ illustrative */
+  { id: 'eu-ai-act-2024', citation: 'EU AI Act (Regulation 2024/1689)', court: 'EU', year: 2024, area: 'data', sub: 'ai_act', summary: 'Risk-tiered AI regulation · prohibited / high / limited / minimal · Art 12 automatic logging · Art 50 transparency · Annex IV documentation.', principle: 'AI risk tiering · provider/deployer duties.', statute: 'Regulation (EU) 2024/1689', tags: ['ai','euact','article12','annex4'], outcome: 'rule', strands: ['MAGNA','LIBERTY','CROWN'] },
+];
+
+const WEAVE_PATTERNS = {
+  unfair_dismissal: { strands: { CROWN: 0.7, EQUITY: 0.9, GUILD: 1.0, LIBERTY: 0.4 }, keywords: ['unfair', 'dismissal', 'redundancy', 'misconduct', 'procedure'] },
+  deposit_dispute: { strands: { HEARTH: 1.0, EQUITY: 0.8, MAGNA: 0.3 }, keywords: ['deposit', 'protection', 'tenancy', 'landlord', 'tds', 'mydeposits', 'dps'] },
+  gdpr_breach: { strands: { LIBERTY: 1.0, EQUITY: 0.7, CROWN: 0.5, ADMIRALTY: 0.4 }, keywords: ['gdpr', 'data', 'breach', 'dsar', 'ico', 'art8'] },
+  consumer_refund: { strands: { EQUITY: 1.0, GUILD: 0.8 }, keywords: ['consumer', 'refund', 'cra', 'section75', 'chargeback'] },
+  whistleblowing: { strands: { GUILD: 1.0, LIBERTY: 0.9, MAGNA: 0.7, CROWN: 0.5 }, keywords: ['whistleblowing', 'pida', 'disclosure', 'protected'] },
+  platform_unpaid: { strands: { GUILD: 1.0, EQUITY: 0.8, ADMIRALTY: 0.5 }, keywords: ['platform', 'freelancer', 'unpaid', 'invoice', 'lba'] },
+  frozen_account: { strands: { EQUITY: 0.9, GUILD: 0.8, ADMIRALTY: 0.6, CROWN: 0.5 }, keywords: ['frozen', 'paypal', 'fos', 'cfpb', 'payment', 'processor'] },
+  illegal_eviction: { strands: { HEARTH: 1.0, CROWN: 0.8, LIBERTY: 0.7 }, keywords: ['eviction', 'illegal', 'pea1977', 'harassment'] },
+  discrimination: { strands: { GUILD: 0.9, EQUITY: 1.0, MAGNA: 0.6, LIBERTY: 0.6 }, keywords: ['discrimination', 'equality', 'protected', 'characteristic'] },
+  subscription_trap: { strands: { EQUITY: 1.0, GUILD: 0.6 }, keywords: ['subscription', 'autorenewal', 'cancel', 'ccrs2013'] },
+};
+
+const WEAVE_STRANDS = [
+  { name: 'MAGNA',     icon: '⚖', angle: 'Constitutional / fundamental rights' },
+  { name: 'LIBERTY',   icon: '🕊', angle: 'Personal liberty / privacy' },
+  { name: 'CROWN',     icon: '👑', angle: 'Criminal / regulatory' },
+  { name: 'EQUITY',    icon: '⚪', angle: 'Fairness / conscience / equitable remedies' },
+  { name: 'HEARTH',    icon: '🏠', angle: 'Housing / family / welfare' },
+  { name: 'GUILD',     icon: '⚒', angle: 'Employment / commercial / trade' },
+  { name: 'ADMIRALTY', icon: '⚓', angle: 'Cross-border / maritime / international' },
+];
+
+/* ═══════════ AI CASCADE ═══════════ */
+const AI_CONFIG_KEY = 'gl-pro.ai';
+const PRO_AI = {
+  tier: 'T0',
+  provider: '',
+  api_key: '',
+  webllm_engine: null,
+  webllm_loading: false,
+  webllm_progress: 0,
+};
+
+function loadProAi() {
+  try {
+    const raw = localStorage.getItem(AI_CONFIG_KEY);
+    if (raw) Object.assign(PRO_AI, JSON.parse(raw));
+  } catch (_) {}
+}
+
+function saveProAi() {
+  try {
+    localStorage.setItem(AI_CONFIG_KEY, JSON.stringify({
+      tier: PRO_AI.tier, provider: PRO_AI.provider, api_key: PRO_AI.api_key,
+    }));
+  } catch (_) {}
+}
+
+async function loadWebLLM() {
+  if (PRO_AI.webllm_loading || PRO_AI.webllm_engine) return;
+  PRO_AI.webllm_loading = true;
+  toast('loading WebLLM · ~2GB first time', 'success');
+  try {
+    const { CreateMLCEngine } = await import('https://esm.run/@mlc-ai/web-llm@0.2.79');
+    PRO_AI.webllm_engine = await CreateMLCEngine('Llama-3.2-3B-Instruct-q4f16_1-MLC', {
+      initProgressCallback: (p) => { PRO_AI.webllm_progress = (p.progress || 0) * 100; },
+    });
+    PRO_AI.webllm_loading = false;
+    toast('WebLLM ready', 'success');
+  } catch (e) {
+    PRO_AI.webllm_loading = false;
+    toast('WebLLM failed · ' + e.message, 'error');
+  }
+}
+
+async function aiComplete(systemPrompt, userMsg, maxTokens = 600) {
+  if (PRO_AI.tier === 'T1' && PRO_AI.webllm_engine) {
+    try {
+      const r = await PRO_AI.webllm_engine.chat.completions.create({
+        messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: userMsg }],
+        max_tokens: maxTokens,
+      });
+      return r.choices[0].message.content;
+    } catch (_) { return null; }
+  }
+  if (PRO_AI.tier === 'T3' && PRO_AI.api_key && PRO_AI.provider) {
+    try {
+      if (PRO_AI.provider === 'anthropic') {
+        const r = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-api-key': PRO_AI.api_key, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+          body: JSON.stringify({ model: 'claude-sonnet-4-5-20250929', max_tokens: maxTokens, system: systemPrompt, messages: [{ role: 'user', content: userMsg }] }),
+        });
+        if (r.ok) { const j = await r.json(); return j.content[0].text; }
+      }
+      if (PRO_AI.provider === 'openai') {
+        const r = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + PRO_AI.api_key },
+          body: JSON.stringify({ model: 'gpt-4o', max_tokens: maxTokens, messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: userMsg }] }),
+        });
+        if (r.ok) { const j = await r.json(); return j.choices[0].message.content; }
+      }
+      if (PRO_AI.provider === 'google') {
+        const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${PRO_AI.api_key}`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ systemInstruction: { parts: [{ text: systemPrompt }] }, contents: [{ role: 'user', parts: [{ text: userMsg }] }] }),
+        });
+        if (r.ok) { const j = await r.json(); return j.candidates[0].content.parts[0].text; }
+      }
+    } catch (_) { return null; }
+  }
+  return null; // T0 → caller falls back
+}
+
+/* ═══════════ CASE DB SEARCH ═══════════ */
+function searchCases(query, areaFilter) {
+  if (!query) return [];
+  const terms = query.toLowerCase().split(/\W+/).filter(t => t.length > 2);
+  const pool = areaFilter ? CASE_DB.filter(c => c.area === areaFilter) : CASE_DB;
+  return pool.map(c => {
+    let score = 0;
+    const haystack = (c.summary + ' ' + c.principle + ' ' + (c.tags || []).join(' ') + ' ' + (c.statute || '') + ' ' + c.sub).toLowerCase();
+    terms.forEach(t => {
+      if (haystack.includes(t)) score += 2;
+      if ((c.tags || []).some(tag => tag.includes(t))) score += 3;
+      if (c.principle.toLowerCase().includes(t)) score += 3;
+    });
+    return { ...c, _score: score };
+  }).filter(c => c._score > 0).sort((a, b) => b._score - a._score).slice(0, 8);
+}
+
+function caseCardHtml(c) {
+  return `<div class="card" style="margin-bottom:8px">
+    <div style="display:flex; gap:8px; align-items:start">
+      <div style="flex:1">
+        <div style="font-weight:600; font-size:14px; color:var(--cream); margin-bottom:2px">${esc(c.citation)}</div>
+        <div class="tiny dim mono">${esc(c.court)} · ${c.year} · ${esc(c.area)}/${esc(c.sub)}</div>
+        <div style="margin-top:6px; font-size:13px">${esc(c.summary)}</div>
+        <div style="margin-top:6px; font-size:12px; color:var(--cream-dim)"><strong>Principle:</strong> ${esc(c.principle)}</div>
+        <div style="margin-top:4px; font-size:11px; color:var(--cream-dim)"><strong>Statute:</strong> ${esc(c.statute || '—')}</div>
+      </div>
+      <button class="btn btn-sm btn-ghost" style="flex:0 0 auto" onclick="copyCite('${c.id}')">copy cite</button>
+    </div>
+    <div class="meta" style="margin-top:6px">
+      ${(c.strands || []).map(s => `<span class="chip info">${esc(s)}</span>`).join('')}
+    </div>
+  </div>`;
+}
+
+async function copyCite(id) {
+  const c = CASE_DB.find(x => x.id === id);
+  if (!c) return;
+  try { await navigator.clipboard.writeText(c.citation); toast('citation copied', 'success'); }
+  catch (_) { toast('copy failed', 'error'); }
+}
+
+/* ═══════════ WEAVE ENGINE ═══════════ */
+async function runWeave(query, patternKey) {
+  const pattern = WEAVE_PATTERNS[patternKey] || null;
+  const results = WEAVE_STRANDS.map(strand => {
+    const weight = pattern ? (pattern.strands[strand.name] || 0) : 1;
+    const cases = CASE_DB
+      .filter(c => (c.strands || []).includes(strand.name))
+      .map(c => ({ ...c, _score: scoreCaseAgainst(c, query, pattern, strand.name) * weight }))
+      .filter(c => c._score > 0)
+      .sort((a, b) => b._score - a._score)
+      .slice(0, 4);
+    return { strand: strand.name, icon: strand.icon, angle: strand.angle, cases, weight };
+  });
+
+  // contradiction detection · simple: outcome differences in same domain
+  const contradictions = [];
+  for (let i = 0; i < results.length; i++) {
+    for (let j = i + 1; j < results.length; j++) {
+      const ai = results[i].cases[0], aj = results[j].cases[0];
+      if (ai && aj && ai.area === aj.area && ai.outcome !== aj.outcome && ai.outcome !== 'rule' && aj.outcome !== 'rule') {
+        contradictions.push({ a: results[i].strand, b: results[j].strand, areaCase: ai.area });
+      }
+    }
+  }
+
+  // optionally AI-synthesise
+  let synthesis = '';
+  if (PRO_AI.tier !== 'T0') {
+    const corpus = results.map(r => `[${r.strand}] ${r.cases.slice(0, 2).map(c => c.citation + ' — ' + c.principle).join('; ')}`).join('\n');
+    const sys = `You are the GroundLevel Pro weave synthesiser. Given a legal query and 7-strand search results, write a 3-paragraph synthesis: (1) where the strongest argument lives, (2) the strongest opposing risk, (3) one concrete next action. Use plain English. Cite cases by citation. Don't invent.`;
+    const out = await aiComplete(sys, `Query: ${query}\n\nWeave results:\n${corpus}`, 500);
+    if (out) synthesis = out;
+  }
+
+  return { results, contradictions, synthesis };
+}
+
+function scoreCaseAgainst(c, query, pattern, strand) {
+  let s = 0;
+  const terms = query.toLowerCase().split(/\W+/).filter(t => t.length > 2);
+  const hay = (c.summary + ' ' + c.principle + ' ' + (c.tags || []).join(' ')).toLowerCase();
+  terms.forEach(t => { if (hay.includes(t)) s += 2; });
+  if (pattern && pattern.keywords) {
+    pattern.keywords.forEach(k => { if (hay.includes(k.toLowerCase())) s += 1; });
+  }
+  return s;
+}
+
+function weaveCardHtml(r) {
+  return `<div class="card" style="margin-bottom:10px; border-left:3px solid var(--blue)">
+    <h3 style="display:flex; gap:8px; align-items:center"><span style="font-size:18px">${r.icon}</span> ${esc(r.strand)} · ${esc(r.angle)}</h3>
+    ${r.cases.length === 0 ? '<p class="dim small">no strong hits on this angle</p>' : r.cases.map(c => `
+      <div style="padding:8px 0; border-top:1px solid var(--void-3); margin-top:8px">
+        <div class="small mono dim">${esc(c.citation)}</div>
+        <div class="small" style="margin-top:2px">${esc(c.principle)}</div>
+      </div>
+    `).join('')}
+  </div>`;
+}
+
+/* ═══════════ RISK SCORING ═══════════ */
+function scoreRisk(weaveResults) {
+  // simple T0 score: average strand-top-hit relevance
+  const tops = (weaveResults.results || []).map(r => (r.cases[0]?._score || 0));
+  const avg = tops.length ? tops.reduce((a, b) => a + b, 0) / tops.length : 0;
+  // map to %
+  let pct = Math.min(100, Math.round(avg * 8));
+  // penalise contradictions
+  pct -= (weaveResults.contradictions || []).length * 8;
+  pct = Math.max(0, pct);
+
+  let label, kind, recommendation;
+  if (pct >= 70)      { label = 'STRONG';       kind = 'success'; recommendation = 'Clear legal basis. Proceed with the appropriate letter/template. Estimated success rate 70-95%.'; }
+  else if (pct >= 40) { label = 'MODERATE';     kind = 'warn';    recommendation = 'Arguable case. Gather additional evidence before formal action. Consider mediation. Estimated success 40-65%.'; }
+  else if (pct >= 10) { label = 'WEAK';         kind = 'warn';    recommendation = 'Uphill battle. Consider whether time/cost outweighs likely recovery. ADR preferred over litigation. Estimated success 15-35%.'; }
+  else                { label = 'INADVISABLE';  kind = 'alert';   recommendation = 'Based on the facts provided, this claim is unlikely to succeed. Seek professional legal advice before any irreversible step — this tool may not see angles a lawyer can.'; }
+
+  return { pct, label, kind, recommendation };
+}
+
+/* ═══════════ DOCUMENT DRAFTING ═══════════ */
+async function draftDocument(c) {
+  const v = c.variables;
+  const type = v.dd_type || 'legal_brief';
+  const factsCorpus = v.dd_facts || '';
+  const cases = searchCases(factsCorpus).slice(0, 4);
+  const citationList = cases.map(c => `· ${c.citation} — ${c.principle}`).join('\n');
+
+  const FORMATS = {
+    particulars_claim: `IN THE ${v.dd_court || 'COUNTY COURT'}\n\nClaim No: [TO BE ASSIGNED]\n\nBETWEEN:\n${v.dd_parties || '[Claimant] v [Defendant]'}\n\n___\n\nPARTICULARS OF CLAIM\n\n1. ${factsCorpus.split('\n').map(l => l.trim()).filter(Boolean).map((l, i) => `${i + 1}. ${l}`).join('\n\n')}\n\nRELIEF SOUGHT\n\n${v.dd_relief || '[set out the orders sought]'}\n\nCITED AUTHORITIES\n${citationList}\n\nSTATEMENT OF TRUTH\nI believe the facts stated in these Particulars are true.\n\nSigned: ____________________  Date: ____________________`,
+    witness_statement: `IN THE ${v.dd_court || 'COUNTY COURT'}\n\n${v.dd_parties || '[Parties]'}\n\nWITNESS STATEMENT OF [YOUR NAME]\n\nI, [your name], of [your address], state as follows:\n\n${factsCorpus.split('\n').map((l, i) => `${i + 1}. ${l.trim()}`).filter(p => p.trim()).join('\n\n')}\n\nSTATEMENT OF TRUTH\nI believe that the facts stated in this witness statement are true.\n\nSigned: ____________________  Dated: ____________________`,
+    skeleton_argument: `SKELETON ARGUMENT\n\nFor: ${v.dd_parties || '[Party]'}\nBefore: ${v.dd_court || '[Tribunal]'}\n\nINTRODUCTION\nThe issue for determination is set out below.\n\nFACTS\n${factsCorpus}\n\nLAW\n${citationList}\n\nSUBMISSIONS\n[Submission 1 · based on the leading authority cited above]\n[Submission 2 · responding to the anticipated counter-argument]\n[Submission 3 · the relief sought and its proportionality]\n\nCONCLUSION\nFor the reasons above, [the desired outcome] is invited.\n\nDated: ____________________  Signed: ____________________`,
+    position_statement: `POSITION STATEMENT\n\nProvided for: ${v.dd_court || '[Mediator]'}\nFrom: ${v.dd_parties || '[Party]'}\n\nBACKGROUND\n${factsCorpus.split('\n').slice(0, 6).join('\n')}\n\nKEY ISSUES\n· [Issue 1]\n· [Issue 2]\n· [Issue 3]\n\nOUR POSITION\nWe believe the most likely just outcome is: ${v.dd_relief || '[outcome]'}.\n\nRELEVANT AUTHORITIES\n${citationList}\n\nOPEN TO\n· Mediated settlement on terms consistent with the above\n· Alternative remedies (ADR before contested hearing)\n\nDated: ____________________`,
+    legal_brief: `LEGAL BRIEF · ADVISORY\n\nClient: [name]\nDate: ${new Date().toISOString().slice(0, 10)}\nMatter: ${v.dd_court || '[Matter]'}\n\nFACTS\n${factsCorpus}\n\nAPPLICABLE LAW\n${citationList}\n\nANALYSIS\n[Where the law applied to these facts leads · drafted via T0 template. Use AI cascade to expand below.]\n\nRECOMMENDED ACTION\n${v.dd_relief || '[recommended next step]'}\n\nRISKS / OPEN QUESTIONS\n· [Identify the strongest counter-argument]\n· [Identify the evidence-gap that would change the recommendation]\n\nDISCLAIMER: this is a draft advisory. Not legal advice. Attorney review required.`,
+    compliance_report: `COMPLIANCE POSTURE REPORT\n\nClient: [name]\nDate: ${new Date().toISOString().slice(0, 10)}\nFramework(s): GDPR · EU AI Act · CRA 2015 · ERA 1996\n\nEXECUTIVE SUMMARY\n[Summarise the posture in 3 sentences]\n\nKEY GAPS\n[Run the Compliance Audit module to populate this section]\n\nREMEDIATION ROADMAP\n· Immediate (≤30 days) · [item]\n· Near-term (1-3 months) · [item]\n· Strategic (3-12 months) · [item]\n\nCITED AUTHORITIES\n${citationList}\n\nDATE: ${new Date().toISOString().slice(0, 10)}`,
+    due_diligence: `DUE DILIGENCE SUMMARY\n\nTarget: [name]\nScope: ${factsCorpus.slice(0, 200)}\nDate: ${new Date().toISOString().slice(0, 10)}\n\nFINDINGS\n${factsCorpus}\n\nLEGAL RISK SUMMARY\n${citationList}\n\nFLAGS\n· [material flag 1]\n· [material flag 2]\n\nRECOMMENDED CONDITIONS\n· [warranty / indemnity / escrow term]\n\nDated: ____________________`,
+  };
+
+  let draft = FORMATS[type] || FORMATS.legal_brief;
+
+  // AI enhance if available
+  if (PRO_AI.tier !== 'T0') {
+    const sys = `You are GroundLevel Pro's document drafter. Take the user's draft template and tighten the prose to court-ready legal English. Preserve citations exactly. Don't invent facts. Mark inserted prose with [drafted] tags only if the user requests. Format for A4 print.`;
+    const enhanced = await aiComplete(sys, draft, 1500);
+    if (enhanced) draft = enhanced;
+  }
+
+  return { draft, citations: cases };
+}
+
+/* ═══════════ COMPLIANCE AUDIT ENGINE ═══════════ */
+const COMPLIANCE_RULES = [
+  { id: 'uk_gdpr_dpa', framework: 'UK GDPR / DPA 2018', check: v => v.ca_jurisdiction !== 'us' && (!v.ca_dpa || v.ca_dpa === 'no'), severity: 'high', gap: 'No Data Processing Agreements with sub-processors · Art 28 UK GDPR breach.', remedy: 'Use the GDPR module · DPA template · execute with all sub-processors.' },
+  { id: 'uk_gdpr_pp', framework: 'UK GDPR / DPA 2018', check: v => v.ca_jurisdiction !== 'us' && (v.ca_privacy_policy === 'no' || v.ca_privacy_policy === 'stale'), severity: 'high', gap: 'Privacy policy missing or stale (>12 months without review).', remedy: 'Use the GDPR module · privacy policy template · publish within 14 days.' },
+  { id: 'uk_gdpr_dsar', framework: 'UK GDPR / DPA 2018', check: v => v.ca_jurisdiction !== 'us' && v.ca_personal_data !== 'none' && (v.ca_dsar_process === 'no' || v.ca_dsar_process === 'informal'), severity: 'medium', gap: 'No documented DSAR response process · 1-month statutory deadline cannot be reliably met.', remedy: 'Use the Data Access module · DSAR workflow template + internal checklist.' },
+  { id: 'uk_gdpr_records', framework: 'UK GDPR Art 30', check: v => v.ca_size !== '1' && v.ca_size !== '2-9' && v.ca_records !== 'yes', severity: 'medium', gap: 'No Article 30 record of processing activities. Mandatory for organisations >250 employees and recommended for smaller orgs with regular processing.', remedy: 'Build ROPA template · GroundLevel data module.' },
+  { id: 'eu_ai_act_audit', framework: 'EU AI Act Art 12', check: v => v.ca_uses_ai === 'yes' && (v.ca_eu_users === 'yes' || v.ca_eu_users === 'maybe') && v.ca_audit_log !== 'yes', severity: 'high', gap: 'AI in production with EU users, but no Art 12 automatic logging chain. Required from Aug 2 2026.', remedy: 'Use fall-euaiact audit-shim · drop-in install · single script tag.' },
+  { id: 'eu_ai_act_planning', framework: 'EU AI Act planning', check: v => v.ca_uses_ai === 'planning' && (v.ca_eu_users === 'yes' || v.ca_eu_users === 'maybe'), severity: 'medium', gap: 'AI planned with EU exposure. Article 12 + Annex IV + Article 50 obligations attach BEFORE launch.', remedy: 'Use Article 12 audit shim + Annex IV template (fall-euaiact) ahead of launch.' },
+  { id: 'employment_contracts', framework: 'Employment Rights Act 1996', check: v => v.ca_employment_contracts === 'no' && v.ca_size !== '1', severity: 'high', gap: 'No written employment particulars. Statutory right within 2 months of starting (ERA s.1).', remedy: 'Issue s.1 statements within 14 days. Use Employment module template.' },
+  { id: 'employment_handbook', framework: 'ACAS Code', check: v => v.ca_size !== '1' && v.ca_size !== '2-9' && v.ca_handbook === 'no', severity: 'medium', gap: 'No employee handbook / grievance procedure. ACAS Code non-compliance can adjust Tribunal awards by ±25%.', remedy: 'Use the Employment module · grievance procedure template.' },
+  { id: 'cra_terms', framework: 'Consumer Rights Act 2015', check: v => v.ca_t_and_c === 'never', severity: 'medium', gap: 'Consumer T&Cs never reviewed against CRA 2015 Part 2 unfair-terms rules.', remedy: 'Use the Consumer module · unfair-terms checklist.' },
+  { id: 'cra_subscription', framework: 'CCRs 2013', check: v => v.ca_subscription === 'yes', severity: 'medium', gap: 'Auto-renewing subscriptions trigger CCRs 2013 disclosure + cancellation duties. Common source of trading-standards complaints.', remedy: 'Use the Subscription module · disclosure template + cancellation flow.' },
+  { id: 'breach_plan', framework: 'UK GDPR · DPA 2018', check: v => v.ca_personal_data !== 'none' && (v.ca_breach_plan === 'no'), severity: 'high', gap: 'No data breach response plan. 72-hour reporting clock cannot be met without one.', remedy: 'Build breach playbook · template in GDPR module.' },
+  { id: 'health_safety', framework: 'Health & Safety at Work Act 1974', check: v => (v.ca_size === '10-49' || v.ca_size === '50-249' || v.ca_size === '250+') && v.ca_health_safety === 'no', severity: 'high', gap: 'Written H&S policy required by law if 5+ employees.', remedy: 'Draft H&S policy · template available via Help → External resources.' },
+  { id: 'cyber_incident', framework: 'UK GDPR · DPA 2018', check: v => v.ca_cyber === 'incident' && v.ca_breach_plan !== 'yes', severity: 'high', gap: 'Cyber incident occurred AND no breach response plan. Material risk for next incident.', remedy: 'Engage incident response specialist this week · plan breach playbook.' },
+];
+
+function runComplianceAudit(vars) {
+  const gaps = COMPLIANCE_RULES.filter(r => r.check(vars));
+  const score = Math.max(0, 100 - gaps.reduce((s, g) => s + ({ high: 15, medium: 8, low: 3 }[g.severity] || 5), 0));
+  return { gaps, score };
+}
+
+
 function openModule(moduleId) {
   const mod = STATE.modules.find(m => m.id === moduleId);
   if (!mod) return;
@@ -4359,6 +4880,104 @@ function renderStep(root, c, mod, step, stepIndex) {
       ]));
     });
     root.appendChild(wrap);
+  }
+
+  /* ═══════════ PRO step kinds ═══════════ */
+
+  if (step.kind === 'case_search') {
+    const card = el('div', { class: 'card' });
+    card.appendChild(el('h3', null, step.heading));
+    if (step.body) card.appendChild(el('p', { html: step.body }));
+    const mount = el('div', { id: 'caseSearchMount' });
+    card.appendChild(mount);
+    root.appendChild(card);
+
+    const q = c.variables.cr_query || '';
+    const area = c.variables.cr_area || '';
+    const hits = searchCases(q, area);
+    if (hits.length === 0) {
+      mount.innerHTML = '<div class="empty"><div class="emoji">⚖</div><h3>No matches</h3><p>Try broader terms · or remove the area filter.</p></div>';
+    } else {
+      mount.innerHTML = `<p class="small dim">${hits.length} match${hits.length === 1 ? '' : 'es'} · ranked by relevance</p>${hits.map(caseCardHtml).join('')}`;
+    }
+    return;
+  }
+
+  if (step.kind === 'weave_run') {
+    const card = el('div', { class: 'card' });
+    card.appendChild(el('h3', null, step.heading));
+    if (step.body) card.appendChild(el('p', { html: step.body }));
+    const mount = el('div', { id: 'weaveMount' });
+    card.appendChild(mount);
+    root.appendChild(card);
+    mount.innerHTML = '<div class="dim small" style="padding: 14px 0">running 7-strand weave...</div>';
+    runWeave(c.variables.wv_query || '', c.variables.wv_pattern || null).then(w => {
+      let html = w.results.map(weaveCardHtml).join('');
+      if (w.contradictions.length) {
+        html = `<div class="card" style="border-left:3px solid var(--warn); background:rgba(245,158,11,0.06); margin-bottom:10px">
+          <h3 style="color:var(--warn)">⚠ Contradictions between strands</h3>
+          ${w.contradictions.map(x => `<div class="small">${esc(x.a)} ↔ ${esc(x.b)} · area: ${esc(x.areaCase)}</div>`).join('')}
+        </div>` + html;
+      }
+      if (w.synthesis) {
+        html += `<div class="card" style="border-left:3px solid var(--blue)">
+          <h3>Synthesis</h3>
+          <div style="white-space:pre-wrap; font-size:14px; line-height:1.6">${esc(w.synthesis)}</div>
+        </div>`;
+      }
+      const risk = scoreRisk(w);
+      html += `<div class="card" style="margin-top:12px">
+        <h3>Risk score</h3>
+        <div class="meta"><span class="chip ${risk.kind}">${risk.label} · ${risk.pct}%</span></div>
+        <p class="small" style="margin-top:8px">${esc(risk.recommendation)}</p>
+        <p class="tiny dim" style="margin-top:8px">⚠ This is information, not legal advice. The tool is honest about weakness — that itself is a feature.</p>
+      </div>`;
+      mount.innerHTML = html;
+    }).catch(e => { mount.innerHTML = `<div class="empty"><div class="emoji">⚠</div><h3>Weave failed</h3><p>${esc(e.message)}</p></div>`; });
+    return;
+  }
+
+  if (step.kind === 'document_draft') {
+    const card = el('div', { class: 'card' });
+    card.appendChild(el('h3', null, step.heading));
+    if (step.body) card.appendChild(el('p', { html: step.body }));
+    const mount = el('div', { id: 'docDraftMount' });
+    card.appendChild(mount);
+    root.appendChild(card);
+    mount.innerHTML = '<div class="dim small" style="padding:14px 0">drafting...</div>';
+    draftDocument(c).then(d => {
+      mount.innerHTML = `<div class="letter">${esc(d.draft)}</div>
+        <div class="letter-actions">
+          <button class="btn btn-sm btn-primary" onclick="copyText(${JSON.stringify(d.draft).replace(/"/g, '&quot;')})">📋 copy</button>
+          <button class="btn btn-sm btn-ghost" onclick="printLetter(${JSON.stringify(d.draft).replace(/"/g, '&quot;')}, ${JSON.stringify((c.variables.dd_type||'document').toString()).replace(/"/g, '&quot;')})">🖨 print / PDF</button>
+        </div>
+        ${d.citations.length ? `<p class="small dim" style="margin-top:10px">${d.citations.length} citation${d.citations.length === 1 ? '' : 's'} auto-included from case DB</p>` : ''}`;
+    });
+    return;
+  }
+
+  if (step.kind === 'compliance_check') {
+    const card = el('div', { class: 'card' });
+    card.appendChild(el('h3', null, step.heading));
+    if (step.body) card.appendChild(el('p', { html: step.body }));
+    const audit = runComplianceAudit(c.variables);
+    const sevColour = { high: 'alert', medium: 'warn', low: '' };
+    let html = `<div class="meta" style="margin-bottom:14px"><span class="chip ${audit.score >= 75 ? 'success' : audit.score >= 50 ? 'warn' : 'alert'}">posture: ${audit.score}/100</span><span class="chip">${audit.gaps.length} gap${audit.gaps.length === 1 ? '' : 's'}</span></div>`;
+    if (audit.gaps.length === 0) {
+      html += '<p class="small">No material gaps surfaced by the audit. Re-run quarterly or after material changes.</p>';
+    } else {
+      html += audit.gaps.map(g => `
+        <div class="card" style="margin-bottom:8px; border-left:3px solid var(--${sevColour[g.severity] || 'cream'})">
+          <div class="meta"><span class="chip ${sevColour[g.severity] || ''}">${esc(g.severity)}</span><span class="chip">${esc(g.framework)}</span></div>
+          <h3 style="margin-top:6px">${esc(g.gap)}</h3>
+          <p class="small"><strong>Remedy:</strong> ${esc(g.remedy)}</p>
+        </div>
+      `).join('');
+    }
+    html += '<p class="tiny dim" style="margin-top:12px">⚠ This audit covers UK/EU baselines only. Specialist domains (financial services, healthcare, aviation, defence) require additional review. Attorney sign-off recommended before delivery.</p>';
+    card.appendChild(el('div', { html }));
+    root.appendChild(card);
+    return;
   }
 }
 
@@ -4708,6 +5327,77 @@ function renderHelp() {
     </div>
   `;
 }
+
+/* ═══════════ PRO AI TIER UI ═══════════ */
+function renderAiTierChip() {
+  const lbl = document.getElementById('aiTierLabel');
+  const chip = document.getElementById('aiTierChip');
+  if (!lbl || !chip) return;
+  const tier = PRO_AI.tier || 'T0';
+  let txt = tier;
+  if (tier === 'T1' && PRO_AI.webllm_engine) txt = 'T1 · WebLLM live';
+  else if (tier === 'T1' && PRO_AI.webllm_loading) txt = 'T1 · loading ' + Math.round(PRO_AI.webllm_progress) + '%';
+  else if (tier === 'T1') txt = 'T1 · click to load';
+  else if (tier === 'T3' && PRO_AI.api_key) txt = 'T3 · ' + (PRO_AI.provider || 'BYOK');
+  else if (tier === 'T3') txt = 'T3 · no key';
+  else txt = 'T0 · offline';
+  lbl.textContent = txt;
+}
+
+function openAiTierModal() {
+  const tierOptions = [
+    { v: 'T0', label: 'T0 · offline · keyword search only · always works' },
+    { v: 'T1', label: 'T1 · WebLLM in browser · ~2GB · sovereign · runs offline after first load' },
+    { v: 'T3', label: 'T3 · BYOK · Claude / OpenAI / Gemini · key stays on device' },
+  ];
+  const tierSel = tierOptions.map(o => `<option value="${o.v}"${PRO_AI.tier === o.v ? ' selected' : ''}>${esc(o.label)}</option>`).join('');
+  const providerSel = ['', 'anthropic', 'openai', 'google'].map(p => `<option value="${p}"${PRO_AI.provider === p ? ' selected' : ''}>${esc(p || '— pick —')}</option>`).join('');
+
+  const body = `
+    <div class="field"><label>AI tier</label><select id="proTierSel">${tierSel}</select></div>
+    <div id="proT1Box" style="display:${PRO_AI.tier === 'T1' ? 'block' : 'none'}">
+      <p class="small dim">WebLLM downloads ~2GB on first use. After that it runs offline forever. No data leaves your device.</p>
+      <button class="btn btn-sm btn-primary" onclick="loadWebLLM().then(()=>{renderAiTierChip(); closeModal();})">${PRO_AI.webllm_engine ? '✓ loaded' : 'load WebLLM model'}</button>
+    </div>
+    <div id="proT3Box" style="display:${PRO_AI.tier === 'T3' ? 'block' : 'none'}">
+      <div class="field"><label>Provider</label><select id="proProviderSel">${providerSel}</select></div>
+      <div class="field"><label>API key</label><input type="password" id="proApiKey" placeholder="sk-ant-... or sk-..." value="${esc(PRO_AI.api_key || '')}"></div>
+      <p class="small dim">Key stays in your browser's localStorage. Direct call to the provider · no proxy.</p>
+    </div>
+  `;
+
+  modal({
+    title: 'AI cascade',
+    body,
+    actions: [
+      { label: 'Save', kind: 'primary', onClick: () => {
+        PRO_AI.tier = document.getElementById('proTierSel').value;
+        if (PRO_AI.tier === 'T3') {
+          PRO_AI.provider = document.getElementById('proProviderSel').value;
+          PRO_AI.api_key = document.getElementById('proApiKey').value;
+        }
+        saveProAi();
+        renderAiTierChip();
+        closeModal();
+        toast('AI tier saved', 'success');
+      }},
+      { label: 'Cancel', kind: 'ghost', onClick: closeModal },
+    ],
+  });
+
+  // wire tier change → reveal correct box
+  setTimeout(() => {
+    const sel = document.getElementById('proTierSel');
+    if (sel) sel.onchange = () => {
+      const v = sel.value;
+      document.getElementById('proT1Box').style.display = v === 'T1' ? 'block' : 'none';
+      document.getElementById('proT3Box').style.display = v === 'T3' ? 'block' : 'none';
+    };
+  }, 50);
+}
+
+/* expose for console */
+window.gl_pro = { CASE_DB, WEAVE_PATTERNS, searchCases, runWeave, scoreRisk, runComplianceAudit, PRO_AI };
 
 /* ═══════════ KICK IT OFF ═══════════ */
 boot();

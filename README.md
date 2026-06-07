@@ -1,6 +1,17 @@
-# ◊·κ=φ⁴ · GroundLevel
+# ◊·κ=φ⁴ · GroundLevel **Pro**
 
-**Sovereign legal toolkit. For the people not the few.**
+**Sovereign legal AI · for the people not the few.**
+
+> Palantir charges Kirkland $100-500M for a legal AI wrapper.
+> Harvey AI: $50-200k/yr. Legora: $20-80k/yr.
+> Five engineers at $600k each: $3M/yr.
+> **This: $0. Works offline. One HTML file. One weekend.**
+
+**v4 · Pro** adds 4 new modules on top of v3's 12:
+- **Case research** · 50+ landmark UK cases baked in · instant T0 search
+- **Weave engine** · 7-strand parallel research (MAGNA · LIBERTY · CROWN · EQUITY · HEARTH · GUILD · ADMIRALTY) · contradiction detection
+- **Document drafting** · particulars of claim · witness statements · skeleton arguments · court-ready format
+- **Compliance audit** · UK GDPR · EU AI Act · ERA 1996 · CRA 2015 · 20-question audit · gap report
 
 > The law exists to protect everyone.
 > Lawyers exist to charge for access to the law.
