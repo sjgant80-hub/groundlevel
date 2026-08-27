@@ -1019,6 +1019,41 @@ footer a:hover { color: var(--blue); }
 </footer>
 
 <!-- ═══════════ EU AI Act Article 12 audit shim ═══════════ -->
+<script>
+/*__KERNEL_START__*/
+(function(){
+// groundlevel · ground.mjs — the deadline law, konomified IN PLACE (2026-08-27).
+// A legal case manager's date maths is a statutory clock: wrong by one day is real harm. These are
+// the page's own functions extracted byte-faithful — STATE.cases becomes the `cases` parameter and
+// the clock is injected (todayMs) so the gate is deterministic while the page passes its real now.
+// The page inlines this kernel verbatim and delegates — the gated maths IS the live maths.
+
+function addDays(d, n) { const x = new Date(d); x.setDate(x.getDate() + n); return x; }
+
+function daysBetween(a, b) { return Math.round((new Date(b) - new Date(a)) / 86400000); }
+
+// every PENDING deadline due within `days` of today (days === 0 = no window: everything pending),
+// sorted soonest-first. Overdue (diff < 0) is EXCLUDED by the window — the page surfaces overdue
+// separately; locking that behavior is deliberate.
+function collectUpcomingDeadlines(cases, days, todayMs) {
+  const today = new Date(todayMs); today.setHours(0, 0, 0, 0);
+  const out = [];
+  (cases || []).forEach(c => {
+    (c.deadlines || []).forEach(d => {
+      if (d.status !== 'pending') return;
+      const diff = daysBetween(today, d.due);
+      if (days === 0 || (diff >= 0 && diff <= days)) {
+        out.push({ ...d, case_id: c.id, case_title: c.title });
+      }
+    });
+  });
+  return out.sort((a, b) => new Date(a.due) - new Date(b.due));
+}
+
+window.GROUND = { addDays, daysBetween, collectUpcomingDeadlines };
+})();
+/*__KERNEL_END__*/
+</script>
 <script src="https://sjgant80-hub.github.io/fall-euaiact/cdn/audit-shim.js" data-tool="groundlevel" data-tier="limited" defer></script>
     <script src="https://sjgant80-hub.github.io/fall-euaiact/cdn/nas-shim.js" data-tool="groundlevel" data-organ="L3.organs.groundlevel"></script>
     <script src="https://sjgant80-hub.github.io/fall-euaiact/cdn/mistake-shim.js" data-tool="groundlevel" defer></script>
@@ -1194,8 +1229,8 @@ function goTab(tab) {
 /* ═══════════ DATE helpers ═══════════ */
 function isoDate(d) { return (d instanceof Date ? d : new Date(d)).toISOString().slice(0, 10); }
 function isoDateTime(d) { return (d instanceof Date ? d : new Date(d)).toISOString(); }
-function addDays(d, n) { const x = new Date(d); x.setDate(x.getDate() + n); return x; }
-function daysBetween(a, b) { return Math.round((new Date(b) - new Date(a)) / 86400000); }
+function addDays(d, n) { return window.GROUND.addDays(d, n); }
+function daysBetween(a, b) { return window.GROUND.daysBetween(a, b); }
 function relTime(d) {
   const diff = daysBetween(new Date(), d);
   if (diff === 0) return 'today';
@@ -1297,20 +1332,7 @@ function renderModulesGrid() {
   });
 }
 
-function collectUpcomingDeadlines(days) {
-  const today = new Date(); today.setHours(0, 0, 0, 0);
-  const out = [];
-  STATE.cases.forEach(c => {
-    (c.deadlines || []).forEach(d => {
-      if (d.status !== 'pending') return;
-      const diff = daysBetween(today, d.due);
-      if (days === 0 || (diff >= 0 && diff <= days)) {
-        out.push({ ...d, case_id: c.id, case_title: c.title });
-      }
-    });
-  });
-  return out.sort((a, b) => new Date(a.due) - new Date(b.due));
-}
+function collectUpcomingDeadlines(days) { return window.GROUND.collectUpcomingDeadlines(STATE.cases, days, Date.now()); }
 
 /* ═══════════ TEMPLATES + MODULES are defined in their own blocks below ═══════════ */
 /* (see TEMPLATES_DEFINITION and MODULES_DEFINITION blocks) */

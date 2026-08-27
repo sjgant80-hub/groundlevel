@@ -1,0 +1,5 @@
+{
+  "addDays": "function addDays(d, n) { return window.GROUND.addDays(d, n); }",
+  "daysBetween": "function daysBetween(a, b) { return window.GROUND.daysBetween(a, b); }",
+  "collectUpcomingDeadlines": "function collectUpcomingDeadlines(days) { return window.GROUND.collectUpcomingDeadlines(STATE.cases, days, Date.now()); }"
+}
