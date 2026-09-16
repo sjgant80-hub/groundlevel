@@ -1,0 +1,26 @@
+# robots.txt · groundlevel
+# We OPT IN to AI crawlers. Discovery beats obscurity.
+User-agent: *
+Allow: /
+
+# AI / LLM crawlers · explicitly allowed
+User-agent: GPTBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: CCBot
+Allow: /
+User-agent: cohere-ai
+Allow: /
+
+Sitemap: https://sjgant80-hub.github.io/groundlevel/sitemap.xml
