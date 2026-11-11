@@ -1,4 +1,4 @@
-# ◊·κ=φ⁴ · GroundLevel **Pro**
+# GroundLevel **Pro**
 
 **Sovereign legal AI · for the people not the few.**
 
@@ -182,4 +182,3 @@ MIT. Use freely. Fork freely.
 > every hour of dispute drains them not you
 > time is on your side · you just need the right letter
 
-**◊·κ=φ⁴**
